@@ -52,6 +52,7 @@ const OrderEditScreen = () => {
       <Row>
         <Col md={8}>
           <Link
+            onClick={() => navigate(-1)}
             to={`/admin/orders/${page}`}
             type='button'
             className='btn btn-light'

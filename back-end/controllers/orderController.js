@@ -83,11 +83,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 const getMyOrders = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
+  const count = await Order.countDocuments({ user: req.user._id })
   const orders = await Order.find({ user: req.user._id })
+    .sort({ createdAt: -1 })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
-  res.json({ orders, page, pages: Math.ceil(orders.length / pageSize) })
+  res.json({ orders, page, pages: Math.ceil(count / pageSize) })
 })
 
 //@desc     Get User orders
@@ -96,10 +98,12 @@ const getMyOrders = asyncHandler(async (req, res) => {
 const getUserOrders = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
+  const count = await Order.countDocuments({ user: req.params.id })
   const orders = await Order.find({ user: req.params.id })
+    .sort({ createdAt: -1 })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
-  res.json({ orders, page, pages: Math.ceil(orders.length / pageSize) })
+  res.json({ orders, page, pages: Math.ceil(count / pageSize) })
 })
 
 //@desc     Get all orders
@@ -111,6 +115,7 @@ const getAllOrders = asyncHandler(async (req, res) => {
   const count = await Order.countDocuments({})
   const orders = await Order.find({})
     .populate('user', 'name email')
+    .sort({ createdAt: -1 })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
   if (orders) {

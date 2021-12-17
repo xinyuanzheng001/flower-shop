@@ -8,6 +8,7 @@ import UserPaginate from '../components/UserPaginate'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { deleteUser, getUsersList } from '../actions/userActions'
+import Meta from '../components/Meta'
 
 const UserListScreen = () => {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const UserListScreen = () => {
   }, [dispatch, navigate, success, userInfo, pageNumber])
   return (
     <>
+      <Meta title='User List' />
       <h1>Users</h1>
       {loading ? (
         <Loader />

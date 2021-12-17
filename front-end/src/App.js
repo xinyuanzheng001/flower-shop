@@ -42,7 +42,12 @@ function App() {
             </Route>
             <Route path='/login' element={<LogInScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
-            <Route path='/profile' element={<ProfileScreen />} />
+            <Route path='/profile' element={<ProfileScreen />} exact />
+            <Route
+              path='/profile/:pageNumber'
+              element={<ProfileScreen />}
+              exact
+            />
             <Route path='/shipping' element={<ShippingScreen />} />
             <Route path='/payment' element={<PaymentScreen />} />
             <Route path='/placeorder' element={<PlaceOrderScreen />} />
@@ -63,7 +68,16 @@ function App() {
               element={<UserListScreen />}
               exact
             />
-            <Route path='/admin/users/:id/edit' element={<UserEditScreen />} />
+            <Route
+              path='/admin/users/:id/edit'
+              element={<UserEditScreen />}
+              exact
+            />
+            <Route
+              path='/admin/users/:id/edit/:pageNumber'
+              element={<UserEditScreen />}
+              exact
+            />
             <Route
               path='/admin/products'
               element={<ProductListScreen />}

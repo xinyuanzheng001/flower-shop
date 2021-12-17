@@ -8,6 +8,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getUserDetail, updateUserByAdmin } from '../actions/userActions'
 import { getUserOrderList } from '../actions/orderActions'
 import { USER_UPDATE_ADMIN_RESET } from '../constants/userConstants'
+import ProfilePaginate from '../components/ProfilePaginate'
+import Meta from '../components/Meta'
 
 const UserEditScreen = () => {
   const [name, setName] = useState('')
@@ -15,6 +17,7 @@ const UserEditScreen = () => {
   const [isAdmin, setIsAdmin] = useState(false)
   const navigate = useNavigate()
   const { id } = useParams()
+  const { pageNumber } = useParams() || 1
 
   const dispatch = useDispatch()
 
@@ -35,6 +38,8 @@ const UserEditScreen = () => {
     loading: loadingOrder,
     error: errorOrder,
     orderListDetail,
+    pages,
+    page,
   } = orderListAdmin
 
   useEffect(() => {
@@ -43,8 +48,8 @@ const UserEditScreen = () => {
         type: USER_UPDATE_ADMIN_RESET,
       })
     } else {
+      dispatch(getUserOrderList(id, pageNumber))
       if (!user.name || user._id !== id) {
-        dispatch(getUserOrderList(id))
         dispatch(getUserDetail(id))
       } else {
         setName(user.name)
@@ -52,7 +57,7 @@ const UserEditScreen = () => {
         setIsAdmin(user.isAdmin)
       }
     }
-  }, [dispatch, navigate, userInfo, user, id, success])
+  }, [dispatch, navigate, userInfo, user, id, success, pageNumber])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -61,6 +66,7 @@ const UserEditScreen = () => {
 
   return (
     <>
+      <Meta title='User Edit' />
       <Link to='/admin/users' className='btn btn-light my-3'>
         Go Back
       </Link>
@@ -110,50 +116,64 @@ const UserEditScreen = () => {
           ) : errorOrder ? (
             <Message variant='danger'>{errorOrder}</Message>
           ) : (
-            <Table striped bordered hover responsive className='table-sm'>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>DATE</th>
-                  <th>TOTAL</th>
-                  <th>PAID</th>
-                  <th>DELIVERED</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderListDetail.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{order.createdAt.substring(0, 10)}</td>
-                    <td>${order.totalPrice}</td>
-                    <td>
-                      {order.isPaid ? (
-                        order.paidAt.substring(0, 10)
-                      ) : (
-                        <i className='fas fa-times' style={{ color: 'red' }} />
-                      )}
-                    </td>
-                    <td>
-                      {order.isDelivered ? (
-                        order.deliveredAt.substring(0, 10)
-                      ) : (
-                        <i className='fas fa-times' style={{ color: 'red' }} />
-                      )}
-                    </td>
-                    <td>
-                      <Button
-                        as={Link}
-                        to={`/order/${order._id}`}
-                        className='btn-sm btn-light'
-                      >
-                        Detail
-                      </Button>
-                    </td>
+            <>
+              <Table striped bordered hover responsive className='table-sm'>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                    <th>PAID</th>
+                    <th>DELIVERED</th>
+                    <th></th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {orderListDetail.map((order) => (
+                    <tr key={order._id}>
+                      <td>{order._id}</td>
+                      <td>{order.createdAt.substring(0, 10)}</td>
+                      <td>${order.totalPrice}</td>
+                      <td>
+                        {order.isPaid ? (
+                          order.paidAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className='fas fa-times'
+                            style={{ color: 'red' }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        {order.isDelivered ? (
+                          order.deliveredAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className='fas fa-times'
+                            style={{ color: 'red' }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        <Button
+                          as={Link}
+                          to={`/admin/orders/${order._id}/edit`}
+                          className='btn-sm btn-light'
+                        >
+                          Detail
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <ProfilePaginate
+                page={page}
+                pages={pages}
+                userId={id}
+                isAdmin={true}
+              />
+            </>
           )}
         </Col>
       </Row>
