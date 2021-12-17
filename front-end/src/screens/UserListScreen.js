@@ -23,6 +23,9 @@ const UserListScreen = () => {
   const deleteHandler = (id, name) => {
     if (window.confirm(`Are you sure want to delete ${name}`)) {
       dispatch(deleteUser(id))
+      if (usersList.length === 1) {
+        navigate(`/admin/users/${pageNumber - 1}`)
+      }
     }
   }
   useEffect(() => {
