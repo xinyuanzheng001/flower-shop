@@ -132,7 +132,9 @@ export const orderListUserReducer = (
     case ORDER_LIST_USER_SUCCESS:
       return {
         loading: false,
-        orderListDetail: action.payload,
+        orderListDetail: action.payload.orders,
+        pages: action.payload.pages,
+        page: action.payload.page,
       }
     case ORDER_LIST_USER_FAIL:
       return {
@@ -160,7 +162,9 @@ export const orderListAdminReducer = (
     case ORDER_LIST_ADMIN_SUCCESS:
       return {
         loading: false,
-        orderListDetail: action.payload,
+        orderListDetail: action.payload.orders,
+        pages: action.payload.pages,
+        page: action.payload.page,
       }
     case ORDER_LIST_ADMIN_FAIL:
       return {
@@ -184,7 +188,12 @@ export const orderListAdminAllReducer = (
     case ORDER_LIST_ADMIN_ALL_REQUEST:
       return { loading: true }
     case ORDER_LIST_ADMIN_ALL_SUCCESS:
-      return { loading: false, ordersListDetail: action.payload }
+      return {
+        loading: false,
+        ordersListDetail: action.payload.orders,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      }
     case ORDER_LIST_ADMIN_ALL_FAIL:
       return { loading: false, error: action.payload }
     case ORDER_LIST_ADMIN_ALL_RESET:

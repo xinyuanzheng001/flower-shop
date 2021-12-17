@@ -19,6 +19,9 @@ const OrderEditScreen = () => {
   const orderDeliever = useSelector((state) => state.orderDeliever)
   const { success: successDeliever } = orderDeliever
 
+  const orderListAdminAll = useSelector((state) => state.orderListAdminAll)
+  const { page } = orderListAdminAll
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const successDeliveredHandler = () => {
@@ -48,7 +51,11 @@ const OrderEditScreen = () => {
       <Meta title='Order Edit' />
       <Row>
         <Col md={8}>
-          <Link to={'/admin/orders'} type='button' className='btn btn-light'>
+          <Link
+            to={`/admin/orders/${page}`}
+            type='button'
+            className='btn btn-light'
+          >
             Go Back
           </Link>
           <ListGroup variant='flush'>

@@ -204,31 +204,36 @@ export const getUserOrderList = (id) => async (dispatch, getState) => {
   }
 }
 
-export const getAllOrdersList = () => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: ORDER_LIST_ADMIN_ALL_REQUEST,
-    })
-    const {
-      userLogin: { userInfo },
-    } = getState()
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+export const getAllOrdersList =
+  (pageNumber = '') =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_LIST_ADMIN_ALL_REQUEST,
+      })
+      const {
+        userLogin: { userInfo },
+      } = getState()
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+      const { data } = await axios.get(
+        `/api/orders?pageNumber=${pageNumber}`,
+        config
+      )
+      dispatch({
+        type: ORDER_LIST_ADMIN_ALL_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: ORDER_LIST_ADMIN_ALL_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
     }
-    const { data } = await axios.get('/api/orders', config)
-    dispatch({
-      type: ORDER_LIST_ADMIN_ALL_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: ORDER_LIST_ADMIN_ALL_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
   }
-}

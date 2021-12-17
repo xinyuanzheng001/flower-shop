@@ -107,9 +107,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 //@route    GET /api/users
 //@access   Admin only
 const getAllUsers = asyncHandler(async (req, res) => {
+  const pageSize = 10
+  const page = Number(req.query.pageNumber) || 1
+  const count = await User.countDocuments({})
   const users = await User.find({})
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
   if (users) {
-    res.json(users)
+    res.json({ users, page, pages: Math.ceil(count / pageSize) })
   } else {
     res.status(404)
     throw new Error('No user')

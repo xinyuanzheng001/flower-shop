@@ -17,6 +17,7 @@ import {
   USER_LOGOUT,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
+  USER_REGISTER_RESET,
   USER_REGISTER_SUCCESS,
   USER_UPDATE_ADMIN_FAIL,
   USER_UPDATE_ADMIN_REQUEST,
@@ -80,6 +81,9 @@ export const logout = () => (dispatch) => {
   })
   dispatch({
     type: ORDER_LIST_ADMIN_RESET,
+  })
+  dispatch({
+    type: USER_REGISTER_RESET,
   })
 }
 
@@ -208,7 +212,7 @@ export const updateUserByAdmin = (user) => async (dispatch, getState) => {
   }
 }
 
-export const getUsersList = () => async (dispatch, getState) => {
+export const getUsersList = (pageNumber) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_LIST_REQUEST,
@@ -221,7 +225,10 @@ export const getUsersList = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    const { data } = await axios.get('/api/users', config)
+    const { data } = await axios.get(
+      `/api/users?pageNumber=${pageNumber}`,
+      config
+    )
     dispatch({
       type: USER_LIST_SUCCESS,
       payload: data,

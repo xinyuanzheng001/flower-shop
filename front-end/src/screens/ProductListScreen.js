@@ -27,11 +27,13 @@ const ProductListScreen = () => {
   const { success: successCreate, product: createdProduct } = productCreate
   const productList = useSelector((state) => state.productList)
   const { products, loading, error, pages, page } = productList
-  // const productUpdate = useSelector((state) => state.productUpdate)
-  // const { success: successUpdate } = productUpdate
+
   const deleteHandler = (id, name) => {
     if (window.confirm(`Are you sure want to delete ${name}`)) {
       dispatch(deleteProduct(id))
+      if (products.length === 1) {
+        navigate(`/admin/products/${pageNumber - 1}`)
+      }
     }
   }
   const createProductHandler = () => {

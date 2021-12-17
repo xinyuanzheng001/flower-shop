@@ -9,6 +9,7 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_REGISTER_RESET,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
@@ -49,6 +50,8 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: false, userInfo: action.payload }
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload }
+    case USER_REGISTER_RESET:
+      return {}
     default:
       return state
   }
@@ -100,7 +103,12 @@ export const userListReducer = (state = { usersList: [] }, action) => {
     case USER_LIST_REQUEST:
       return { loading: true }
     case USER_LIST_SUCCESS:
-      return { usersList: action.payload, loading: false }
+      return {
+        usersList: action.payload.users,
+        loading: false,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      }
     case USER_LIST_FAIL:
       return {
         loading: false,

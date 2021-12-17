@@ -47,12 +47,22 @@ function App() {
             <Route path='/payment' element={<PaymentScreen />} />
             <Route path='/placeorder' element={<PlaceOrderScreen />} />
             <Route path='/order/:id' element={<OrderScreen />} />
-            <Route path='/admin/orders' element={<OrderListScreen />} />
+            <Route path='/admin/orders' element={<OrderListScreen />} exact />
+            <Route
+              path='/admin/orders/:pageNumber'
+              element={<OrderListScreen />}
+              exact
+            />
             <Route
               path='/admin/orders/:id/edit'
               element={<OrderEditScreen />}
             />
-            <Route path='/admin/users' element={<UserListScreen />} />
+            <Route path='/admin/users' element={<UserListScreen />} exact />
+            <Route
+              path='/admin/users/:pageNumber'
+              element={<UserListScreen />}
+              exact
+            />
             <Route path='/admin/users/:id/edit' element={<UserEditScreen />} />
             <Route
               path='/admin/products'
