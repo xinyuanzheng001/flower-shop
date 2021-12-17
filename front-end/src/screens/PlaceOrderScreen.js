@@ -31,7 +31,6 @@ const PlaceOrderScreen = () => {
     // eslint-disable-next-line
   }, [navigate, success])
   const placeOrderHandler = () => {
-    console.log('place')
     dispatch(
       createOrder({
         orderItems: cart.cartItems,

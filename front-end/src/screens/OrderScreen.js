@@ -9,6 +9,7 @@ import Loader from '../components/Loader'
 import { useParams } from 'react-router'
 import { getOrderDetail, payOrder } from '../actions/orderActions'
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import Meta from '../components/Meta'
 
 const OrderScreen = () => {
   const [sdkReady, setSdkReady] = useState(false)
@@ -18,12 +19,12 @@ const OrderScreen = () => {
   const { order, loading, error } = orderDetail
 
   const orderPay = useSelector((state) => state.orderPay)
-  const { loading: loadingPay, success: successPay } = orderPay
-  useEffect(() => {
-    if (!order || order._id !== id) {
-      dispatch(getOrderDetail(id))
-    }
-  }, [dispatch, order, id])
+  const { success: successPay } = orderPay
+  // useEffect(() => {
+  //   if (!order || order._id !== id) {
+  //     dispatch(getOrderDetail(id))
+  //   }
+  // }, [dispatch, order, id])
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal')
@@ -37,7 +38,7 @@ const OrderScreen = () => {
       document.body.appendChild(script)
     }
 
-    if (!order || successPay) {
+    if (!order || successPay || order._id !== id) {
       dispatch(getOrderDetail(id))
       dispatch({ type: ORDER_PAY_RESET })
     } else if (!order.isPaid) {
@@ -58,7 +59,12 @@ const OrderScreen = () => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <Row>
+      <Meta title='Order' />
       <Col md={8}>
+        <Link type='button' className='btn btn-light' to={'/profile'}>
+          Go Back
+        </Link>
+
         <ListGroup variant='flush'>
           <ListGroup.Item>
             <h2>Shipping</h2>

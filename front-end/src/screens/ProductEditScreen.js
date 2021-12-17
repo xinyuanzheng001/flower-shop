@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import FormContainer from '../components/FormContainer'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import Meta from '../components/Meta'
 
 const ProductEditScreen = () => {
   const [name, setName] = useState('')
@@ -57,7 +58,6 @@ const ProductEditScreen = () => {
     )
   }
   const uploadFileHandler = async (e) => {
-    console.log(e)
     const file = e.target.files[0]
     const formData = new FormData()
     formData.append('image', file)
@@ -79,6 +79,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
+      <Meta title='Product Edit' />
       <Link to='/admin/products' className='btn btn-light my-3'>
         Go Back
       </Link>

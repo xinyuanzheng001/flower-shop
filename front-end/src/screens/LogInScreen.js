@@ -8,6 +8,7 @@ import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { remove_go_to_shipping } from '../actions/goToShipping'
+import Meta from '../components/Meta'
 
 const LogInScreen = () => {
   const [email, setEmail] = useState('')
@@ -41,6 +42,7 @@ const LogInScreen = () => {
 
   return (
     <FormContainer>
+      <Meta title='Log In' />
       <h1>Sign In</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}

@@ -7,7 +7,6 @@ const SearchBox = () => {
   const navigate = useNavigate()
   const submitHnadler = (e) => {
     e.preventDefault()
-    console.log(keyword)
     if (keyword.trim()) {
       navigate(`/search/${keyword}`)
     } else {

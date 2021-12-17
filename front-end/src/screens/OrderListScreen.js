@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
 import { getAllOrdersList } from '../actions/orderActions'
+import Meta from '../components/Meta'
 
 const OrderListScreen = () => {
   const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const OrderListScreen = () => {
   }, [dispatch, navigate, userInfo])
   return (
     <>
+      <Meta title='Orders' />
       <Row>
         <Col>
           <h1>Orders</h1>

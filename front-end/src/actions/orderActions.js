@@ -20,9 +20,9 @@ import {
   ORDER_DELIEVERED_REQUEST,
   ORDER_DELIEVERED_SUCCESS,
   ORDER_DELIEVERED_FAIL,
-  ORDER_DELIEVERED_RESET,
 } from '../constants/orderConstants'
 import axios from 'axios'
+import { CART_ITEM_RESET } from '../constants/cartConstants'
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
@@ -45,6 +45,10 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_SUCCESS,
       payload: data,
     })
+    dispatch({
+      type: CART_ITEM_RESET,
+    })
+    localStorage.removeItem('cartItems')
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
@@ -99,14 +103,9 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    const { data } = await axios.put(
-      `/api/orders/${id}/pay`,
-      paymentResult,
-      config
-    )
+    await axios.put(`/api/orders/${id}/pay`, paymentResult, config)
     dispatch({
       type: ORDER_PAY_SUCCESS,
-      payload: data,
     })
   } catch (error) {
     dispatch({

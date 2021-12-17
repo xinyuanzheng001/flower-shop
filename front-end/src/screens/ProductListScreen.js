@@ -13,6 +13,7 @@ import {
 } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 import Paginate from '../components/Paginate'
+import Meta from '../components/Meta'
 
 const ProductListScreen = () => {
   const dispatch = useDispatch()
@@ -58,6 +59,7 @@ const ProductListScreen = () => {
   ])
   return (
     <>
+      <Meta title='Products' />
       <Row>
         <Col>
           <h1>Products</h1>
