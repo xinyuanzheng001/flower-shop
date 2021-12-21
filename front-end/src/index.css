@@ -44,7 +44,8 @@ h2 {
 }
 
 .carousel img {
-  height: 300px;
+  /* height: 300px; */
+  max-height: 400px;
   padding: 40px;
   margin: 40px;
   border-radius: 50%;
@@ -52,6 +53,7 @@ h2 {
   margin-right: auto;
   margin-top: 50px;
 }
+
 .carousel a {
   margin: 0 auto;
 }
@@ -60,12 +62,12 @@ h2 {
 }
 
 @media (max-width: 900px) {
-  .carousel-caption h2 {
+  .carousel-caption h3 {
     font-size: 2.5vw;
   }
 }
 
-.img {
+/* .img {
   width: 100px;
   height: 100px;
-}
+} */
