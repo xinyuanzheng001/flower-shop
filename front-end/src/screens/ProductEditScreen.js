@@ -33,6 +33,10 @@ const ProductEditScreen = () => {
   const productUpdate = useSelector((state) => state.productUpdate)
   const { success } = productUpdate
 
+  const productListCategory = useSelector((state) => state.productListCategory)
+  const { productCategory } = productListCategory
+  const { categories } = productCategory
+
   useEffect(() => {
     if (success) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
@@ -135,11 +139,20 @@ const ProductEditScreen = () => {
           <Form.Group controlId='category'>
             <Form.Label>Category</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Enter category'
+              as='select'
               value={category}
+              required
+              placeholder='dasdsad'
               onChange={(e) => setCategory(e.target.value)}
-            ></Form.Control>
+            >
+              <option>Choose Category</option>
+              {categories &&
+                categories.map((category) => (
+                  <option value={category.category} key={category._id}>
+                    {category.category}
+                  </option>
+                ))}
+            </Form.Control>
           </Form.Group>
           <Form.Group controlId='description'>
             <Form.Label>Description</Form.Label>

@@ -1,4 +1,7 @@
 import {
+  PRODUCT_CATEGORY_LIST_FAIL,
+  PRODUCT_CATEGORY_LIST_REQUEST,
+  PRODUCT_CATEGORY_LIST_SUCCESS,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
@@ -49,6 +52,29 @@ export const listProducts =
       })
     }
   }
+
+export const listProductCategory = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_CATEGORY_LIST_REQUEST,
+    })
+    const { data } = await axios.get('/api/category')
+    dispatch({
+      type: PRODUCT_CATEGORY_LIST_SUCCESS,
+      success: true,
+      payload: data,
+    })
+    localStorage.setItem('productCategory', JSON.stringify(data))
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CATEGORY_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
 
 export const listVipProducts =
   (pageNumber = '') =>

@@ -10,6 +10,7 @@ import {
   productReviewReducer,
   productTopRatedReducer,
   productListVipReducer,
+  productListCategoryReducer,
 } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
@@ -36,6 +37,7 @@ import {
 const reducer = combineReducers({
   productList: productListReducer,
   productListVip: productListVipReducer,
+  productListCategory: productListCategoryReducer,
   productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
@@ -93,6 +95,10 @@ const receivePhoneNumberFromStorage = localStorage.getItem('receivePhoneNumber')
 const receiveNameFromStorage = localStorage.getItem('receiveName')
   ? JSON.parse(localStorage.getItem('receiveName'))
   : {}
+// get categories from local storage
+const productCategoryFromStorage = localStorage.getItem('productCategory')
+  ? JSON.parse(localStorage.getItem('productCategory'))
+  : {}
 const initialState = {
   cart: {
     cartItems: cartItemsFromStorage,
@@ -102,6 +108,9 @@ const initialState = {
     receiveTime: receiveTimeFromStorage,
     receivePhoneNumber: receivePhoneNumberFromStorage,
     receiveName: receiveNameFromStorage,
+  },
+  productListCategory: {
+    productCategory: productCategoryFromStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },
 }

@@ -78,7 +78,7 @@ const addProduct = asyncHandler(async (req, res) => {
     user: req.user._id,
     image: '/images/sample.jpg',
     brand: 'Sample Brand',
-    category: 'Sample Category',
+    category: 'none',
     description: 'Sample description',
   })
   const createdProduct = await product.save()

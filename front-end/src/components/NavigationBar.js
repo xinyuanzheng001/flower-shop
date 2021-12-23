@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Navbar,
   Nav,
@@ -10,24 +10,35 @@ import {
 } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
+import { useSelector, useDispatch } from 'react-redux'
+import { listProductCategory } from '../actions/productActions'
 
 const NavigationBar = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const productListCategory = useSelector((state) => state.productListCategory)
+  const { productCategory, success } = productListCategory
+  const { categories } = productCategory
   const [isOpenCategory, setIsOpenCategory] = useState(false)
-  const [isOpenVip, setIsOpenVip] = useState(false)
+  useEffect(() => {
+    if (!success) {
+      dispatch(listProductCategory())
+    }
+  }, [dispatch, success])
   return (
     <>
       <Navbar
         variant='dark'
         style={{ backgroundColor: 'lightgreen', height: '20px' }}
         className='my-3'
+        id='navbar-control'
         // bg='dark'
         expand='lg'
         collapseOnSelect
       >
         <Container>
           {/* <Navbar.Brand href='#home'>Navbar</Navbar.Brand> */}
-          {/* <Navbar.Toggle className='ml-auto '></Navbar.Toggle> */}
+          <Navbar.Toggle className='ml-auto '></Navbar.Toggle>
           <Navbar.Collapse>
             <Nav>
               {/* <Nav.Link as={Link} to='/' style={{ background: 'none' }}>
@@ -41,12 +52,26 @@ const NavigationBar = () => {
                 onMouseLeave={() => setIsOpenCategory(false)}
                 onClick={() => setIsOpenCategory(!isOpenCategory)}
               >
-                <NavDropdown.Item>red flower</NavDropdown.Item>
-                <NavDropdown.Item>white flower</NavDropdown.Item>
-                <NavDropdown.Item>yellow flower</NavDropdown.Item>
+                {categories &&
+                  categories.map((category) => (
+                    <NavDropdown.Item key={category.id}>
+                      {category.category}
+                    </NavDropdown.Item>
+                  ))}
               </DropdownButton>
-              <Button as={Link} to='/vip' style={{ background: 'none' }}>
+              <Button
+                as={Link}
+                to='/vip'
+                style={{ background: 'none', fontSize: 'large' }}
+              >
                 VIP
+              </Button>
+              <Button
+                as={Link}
+                to='/about'
+                style={{ background: 'none', fontSize: 'large' }}
+              >
+                About Us
               </Button>
             </Nav>
           </Navbar.Collapse>

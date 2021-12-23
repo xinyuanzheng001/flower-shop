@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
 import { useNavigate } from 'react-router'
 import SearchBox from './SearchBox'
-import NavigationBar from './NavigationBar'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -13,6 +12,9 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+  const productListCategory = useSelector((state) => state.productListCategory)
+  const { productCategory, success } = productListCategory
+  const { categories } = productCategory
   const logoutHandler = () => {
     dispatch(logout())
     navigate('/')
@@ -85,9 +87,12 @@ const Header = () => {
               )}
               <div className='dropdown-control'>
                 <NavDropdown title='Category' id='category'>
-                  <NavDropdown.Item>Roses</NavDropdown.Item>
-                  <NavDropdown.Item>White flower</NavDropdown.Item>
-                  <NavDropdown.Item>Red flower</NavDropdown.Item>
+                  {categories &&
+                    categories.map((category) => (
+                      <NavDropdown.Item key={category.id}>
+                        {category.category}
+                      </NavDropdown.Item>
+                    ))}
                 </NavDropdown>
                 <Nav.Link as={Link} to='/vip'>
                   VIP
