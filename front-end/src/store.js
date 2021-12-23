@@ -9,6 +9,7 @@ import {
   productUpdateReducer,
   productReviewReducer,
   productTopRatedReducer,
+  productListVipReducer,
 } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
@@ -29,10 +30,12 @@ import {
   orderListAdminReducer,
   orderListAdminAllReducer,
   orderDelieverReducer,
+  orderReceiveMethodReducer,
 } from './reducers/orderReducer'
 
 const reducer = combineReducers({
   productList: productListReducer,
+  productListVip: productListVipReducer,
   productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
@@ -46,6 +49,7 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   userUpdateProfile: userUpdateProfileReducer,
   shipping: shippingReducer,
+  orderReceiveMethod: orderReceiveMethodReducer,
   orderCreate: orderCreateReducer,
   orderDetail: orderDetailReducer,
   orderPay: orderPayReducer,
@@ -69,10 +73,35 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
   ? JSON.parse(localStorage.getItem('shippingAddress'))
   : {}
+// get receive method from local storage
+const receiveMethodFromStorage = localStorage.getItem('receiveMethod')
+  ? JSON.parse(localStorage.getItem('receiveMethod'))
+  : {}
+// get payment method from local storage
+const paymentMethodFromStorate = localStorage.getItem('paymentMethod')
+  ? JSON.parse(localStorage.getItem('paymentMethod'))
+  : {}
+// get receive time from local storage
+const receiveTimeFromStorage = localStorage.getItem('receiveTime')
+  ? JSON.parse(localStorage.getItem('receiveTime'))
+  : {}
+// get receiver phone number from local storage
+const receivePhoneNumberFromStorage = localStorage.getItem('receivePhoneNumber')
+  ? JSON.parse(localStorage.getItem('receivePhoneNumber'))
+  : {}
+// get receiver name from local storage
+const receiveNameFromStorage = localStorage.getItem('receiveName')
+  ? JSON.parse(localStorage.getItem('receiveName'))
+  : {}
 const initialState = {
   cart: {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
+    receiveMethod: receiveMethodFromStorage,
+    paymentMethod: paymentMethodFromStorate,
+    receiveTime: receiveTimeFromStorage,
+    receivePhoneNumber: receivePhoneNumberFromStorage,
+    receiveName: receiveNameFromStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },
 }

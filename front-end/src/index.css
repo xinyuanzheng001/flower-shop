@@ -20,11 +20,6 @@ h2 {
   padding: 0.5rem 0;
 }
 
-.rating span {
-  /* text-align: center; */
-  /* font-size: 31px; */
-}
-
 /* carousel */
 /* carousel */
 .carousel-item-next,
@@ -71,3 +66,24 @@ h2 {
   width: 100px;
   height: 100px;
 } */
+
+.dropdown-menu.show {
+  margin: 0;
+  border-radius: 5%;
+}
+.dropdown-menu.show :hover {
+  color: orange;
+}
+.dropdown-toggle {
+  /* border: white solid 2px; */
+  /* margin-left: none; */
+}
+#dropdown-item-button {
+  background: none;
+  font-size: large;
+}
+@media (min-width: 990px) {
+  .dropdown-control {
+    display: none;
+  }
+}

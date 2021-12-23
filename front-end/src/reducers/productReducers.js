@@ -12,6 +12,9 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_VIP_FAIL,
+  PRODUCT_LIST_VIP_REQUEST,
+  PRODUCT_LIST_VIP_SUCCESS,
   PRODUCT_REVIEW_FAIL,
   PRODUCT_REVIEW_REQUEST,
   PRODUCT_REVIEW_RESET,
@@ -43,6 +46,23 @@ export const productListReducer = (state = { products: [] }, action) => {
   }
 }
 
+export const productListVipReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_LIST_VIP_REQUEST:
+      return { loading: true, products: [] }
+    case PRODUCT_LIST_VIP_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      }
+    case PRODUCT_LIST_VIP_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
 export const productDetailsReducer = (
   state = { product: { reviews: [] } },
   action

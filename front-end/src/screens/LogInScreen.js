@@ -15,6 +15,8 @@ const LogInScreen = () => {
   const [password, setPassword] = useState('')
   const shipping = useSelector((state) => state.shipping)
   const { goToShipping } = shipping
+  const orderReceiveMethod = useSelector((state) => state.orderReceiveMethod)
+  const { receiveMethod } = orderReceiveMethod
 
   const navigate = useNavigate()
   const location = useLocation().search
@@ -27,9 +29,10 @@ const LogInScreen = () => {
   const { loading, error, userInfo } = userLogin
 
   useEffect(() => {
-    if (userInfo && goToShipping) {
+    if (userInfo && receiveMethod) {
       dispatch(remove_go_to_shipping())
-      navigate('/shipping')
+      // navigate('/shipping')
+      navigate(receiveMethod === 'Pick Up' ? '/pickup' : '/shipping')
     } else if (userInfo) {
       navigate(redirect)
     }

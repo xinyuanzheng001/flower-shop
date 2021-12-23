@@ -25,6 +25,8 @@ import {
   ORDER_DELIEVERED_SUCCESS,
   ORDER_DELIEVERED_FAIL,
   ORDER_DELIEVERED_RESET,
+  ORDER_RECEIVE_METHOD,
+  ORDER_RECEIVE_METHOD_RESET,
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -198,6 +200,20 @@ export const orderListAdminAllReducer = (
       return { loading: false, error: action.payload }
     case ORDER_LIST_ADMIN_ALL_RESET:
       return { ordersListDetail: [] }
+    default:
+      return state
+  }
+}
+
+export const orderReceiveMethodReducer = (
+  state = { receiveMethod: '' },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_RECEIVE_METHOD:
+      return { receiveMethod: action.payload }
+    case ORDER_RECEIVE_METHOD_RESET:
+      return { receiveMethod: '' }
     default:
       return state
   }

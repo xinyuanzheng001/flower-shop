@@ -8,6 +8,7 @@ import {
   getProductByID,
   getProducts,
   getTopProducts,
+  getVipProducts,
   updateProduct,
 } from '../controllers/productController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
@@ -45,6 +46,7 @@ router.route('/').get(getProducts).post(protect, admin, addProduct)
 //   })
 // )
 router.route('/top').get(getTopProducts)
+router.route('/vip').get(getVipProducts)
 router
   .route('/:id')
   .get(getProductByID)

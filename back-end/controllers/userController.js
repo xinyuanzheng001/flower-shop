@@ -15,6 +15,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
@@ -28,7 +29,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, phoneNumber } = req.body
 
   const userExists = await User.findOne({ email })
 
@@ -41,6 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    phoneNumber,
   })
 
   if (user) {
@@ -48,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phoneNumber: phoneNumber,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
@@ -68,6 +71,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       isAdmin: user.isAdmin,
     })
   } else {
@@ -85,6 +89,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.phoneNumber = req.body.phoneNumber || user.phoneNumber
     if (req.body.password) {
       user.password = req.body.password
     }
@@ -94,6 +99,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updateUser._id,
       name: updateUser.name,
       email: updateUser.email,
+      phoneNumber: updateUser.phoneNumber,
       isAdmin: updateUser.isAdmin,
       token: generateToken(updateUser._id),
     })
@@ -145,12 +151,14 @@ const updateUser = asyncHandler(async (req, res) => {
     user.isAdmin = req.body.isAdmin
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.phoneNumber = req.body.phoneNumber || user.phoneNumber
     const updatedUser = await user.save()
 
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      phoneNumber: updateUser.phoneNumber,
       isAdmin: updatedUser.isAdmin,
     })
   } else {

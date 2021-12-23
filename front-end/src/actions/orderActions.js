@@ -20,9 +20,17 @@ import {
   ORDER_DELIEVERED_REQUEST,
   ORDER_DELIEVERED_SUCCESS,
   ORDER_DELIEVERED_FAIL,
+  ORDER_RECEIVE_METHOD,
 } from '../constants/orderConstants'
 import axios from 'axios'
 import { CART_ITEM_RESET } from '../constants/cartConstants'
+
+export const setOrderReceiveMethod = (method) => async (dispatch) => {
+  dispatch({
+    type: ORDER_RECEIVE_METHOD,
+    payload: method,
+  })
+}
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {

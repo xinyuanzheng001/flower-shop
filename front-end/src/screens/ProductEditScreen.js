@@ -15,7 +15,7 @@ const ProductEditScreen = () => {
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState('')
-  const [brand, setBrand] = useState('')
+  const [vip, setVip] = useState(false)
   const [category, setCategory] = useState('')
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
@@ -44,9 +44,9 @@ const ProductEditScreen = () => {
         setName(product.name)
         setPrice(product.price)
         setImage(product.image)
-        setBrand(product.brand)
         setCategory(product.category)
         setDescription(product.description)
+        setVip(product.vip)
       }
     }
   }, [dispatch, navigate, id, product, success])
@@ -54,7 +54,15 @@ const ProductEditScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(
-      updateProduct({ id, name, price, image, brand, category, description })
+      updateProduct({
+        id,
+        name,
+        price,
+        image,
+        category,
+        description,
+        vip,
+      })
     )
   }
   const uploadFileHandler = async (e) => {
@@ -123,15 +131,7 @@ const ProductEditScreen = () => {
             ></Form.Control>
             {uploading && <Loader />}
           </Form.Group>
-          <Form.Group controlId='brand'>
-            <Form.Label>Brand</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Enter brand'
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+
           <Form.Group controlId='category'>
             <Form.Label>Category</Form.Label>
             <Form.Control
@@ -144,11 +144,20 @@ const ProductEditScreen = () => {
           <Form.Group controlId='description'>
             <Form.Label>Description</Form.Label>
             <Form.Control
-              type='text'
+              as='textarea'
               placeholder='Enter description'
+              row='3'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='vip'>
+            <Form.Check
+              type='checkbox'
+              label='For VIP?'
+              checked={vip}
+              onChange={(e) => setVip(e.target.checked)}
+            ></Form.Check>
           </Form.Group>
 
           <Button type='submit' variant='primary' className='my-3'>

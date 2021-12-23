@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
+import NavigationBar from './components/NavigationBar'
 import Footer from './components/Footer'
 import { Container } from 'react-bootstrap'
 import HomeScreen from './screens/HomeScreen'
@@ -10,6 +11,7 @@ import LogInScreen from './screens/LogInScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import ShippingScreen from './screens/ShippingScreen'
+import PickUpScreen from './screens/PickUpScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
@@ -19,11 +21,13 @@ import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
+import HomeVipScreen from './screens/HomeVipScreen'
 
 function App() {
   return (
     <Router>
       <Header />
+      <NavigationBar />
       <main className='py-3'>
         <Container>
           <Routes>
@@ -35,6 +39,9 @@ function App() {
               exact
             />
             <Route path='/page/:pageNumber' element={<HomeScreen />} />
+            <Route path='/vip' element={<HomeVipScreen />} exact />
+            <Route path='/vip/:pageNumber' element={<HomeVipScreen />} exact />
+            <Route path='/vip/product/:id' element={<ProductScreen />} exact />
             <Route path='/product/:id' element={<ProductScreen />} />
             <Route path='/cart'>
               <Route path='' element={<CartScreen />} />
@@ -49,6 +56,7 @@ function App() {
               exact
             />
             <Route path='/shipping' element={<ShippingScreen />} />
+            <Route path='/pickup' element={<PickUpScreen />} />
             <Route path='/payment' element={<PaymentScreen />} />
             <Route path='/placeorder' element={<PlaceOrderScreen />} />
             <Route path='/order/:id' element={<OrderScreen />} />
@@ -88,6 +96,7 @@ function App() {
               element={<ProductListScreen />}
               exact
             />
+
             <Route
               path='/admin/products/:id/edit'
               element={<ProductEditScreen />}

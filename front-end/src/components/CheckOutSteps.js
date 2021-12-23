@@ -1,8 +1,11 @@
 import React from 'react'
 import { Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const CheckOutSteps = ({ step1, step2, step3, step4 }) => {
+  const cart = useSelector((state) => state.cart)
+  const { receiveMethod } = cart
   return (
     <Nav className='justify-content-center mb-4'>
       <Nav.Item>
@@ -16,11 +19,16 @@ const CheckOutSteps = ({ step1, step2, step3, step4 }) => {
       </Nav.Item>
       <Nav.Item>
         {step2 ? (
-          <Nav.Link as={Link} to='/shipping'>
-            Shipping
+          <Nav.Link
+            as={Link}
+            to={receiveMethod === 'Pick Up' ? '/pickup' : '/shipping'}
+          >
+            {receiveMethod === 'Pick Up' ? 'Pick Up' : 'Shipping'}
           </Nav.Link>
         ) : (
-          <Nav.Link disabled>Shipping</Nav.Link>
+          <Nav.Link disabled>
+            {receiveMethod === 'Pick Up' ? 'Pick Up' : 'Shipping'}
+          </Nav.Link>
         )}
       </Nav.Item>
       <Nav.Item>

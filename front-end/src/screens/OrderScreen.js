@@ -20,6 +20,7 @@ const OrderScreen = () => {
 
   const orderPay = useSelector((state) => state.orderPay)
   const { success: successPay } = orderPay
+
   // useEffect(() => {
   //   if (!order || order._id !== id) {
   //     dispatch(getOrderDetail(id))
@@ -67,7 +68,9 @@ const OrderScreen = () => {
 
         <ListGroup variant='flush'>
           <ListGroup.Item>
-            <h2>Shipping</h2>
+            <h2>
+              {order.receiveMethod === 'Pick Up' ? 'Pick Up' : 'Shipping'}
+            </h2>
             <p>
               <strong>Name: </strong> {order.user.name}
             </p>
@@ -140,12 +143,14 @@ const OrderScreen = () => {
                 <Col>${order.itemPrice}</Col>
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col>Shipping:</Col>
-                <Col>${order.shippingPrice}</Col>
-              </Row>
-            </ListGroup.Item>
+            {order.paymentMethod !== 'Cash' && (
+              <ListGroup.Item>
+                <Row>
+                  <Col>Shipping:</Col>
+                  <Col>${order.shippingPrice}</Col>
+                </Row>
+              </ListGroup.Item>
+            )}
             <ListGroup.Item>
               <Row>
                 <Col>Tax:</Col>
@@ -158,9 +163,9 @@ const OrderScreen = () => {
                 <Col>${order.totalPrice}</Col>
               </Row>
             </ListGroup.Item>
-            {/* {!order.isPaid && (
+            {!order.isPaid && order.paymentMethod !== 'Cash' && (
               <ListGroup.Item>
-                {loadingPay && <Loader />}
+                {/* {loadingPay && <Loader />} */}
                 {!sdkReady ? (
                   <Loader />
                 ) : (
@@ -170,15 +175,15 @@ const OrderScreen = () => {
                   />
                 )}
               </ListGroup.Item>
-            )} */}
-            {!order.isPaid && sdkReady && (
+            )}
+            {/* {!order.isPaid && sdkReady && (
               <ListGroup.Item>
                 <PayPalButton
                   amount={order.totalPrice}
                   onSuccess={successPaymentHandler}
                 />
               </ListGroup.Item>
-            )}
+            )} */}
           </ListGroup>
         </Card>
       </Col>

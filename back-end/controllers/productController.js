@@ -25,6 +25,18 @@ const getProducts = asyncHandler(async (req, res) => {
 
   res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
+// @desc Fetch vip products
+// @route GET /api/products/vip
+//@access Public
+const getVipProducts = asyncHandler(async (req, res) => {
+  const pageSize = 12
+  const page = Number(req.query.pageNumber) || 1
+  const count = await Product.countDocuments({ vip: true })
+  const products = await Product.find({ vip: true })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+  res.json({ products, page, pages: Math.ceil(count / pageSize) })
+})
 
 // @desc Fetch single product
 // @route GET /api/products/:id
@@ -86,6 +98,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand = req.body.brand || product.brand
     product.category = req.body.category || product.category
     product.description = req.body.description || product.description
+    product.vip = req.body.vip || product.vip
 
     const updatedProduct = await product.save()
     res.json({
@@ -96,6 +109,7 @@ const updateProduct = asyncHandler(async (req, res) => {
       brand: updatedProduct.brand,
       category: updatedProduct.category,
       description: updatedProduct.description,
+      vip: updateProduct.vip,
     })
   } else {
     res.status(404)
@@ -152,6 +166,7 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
 export {
   getProducts,
+  getVipProducts,
   getProductByID,
   deleteProductByID,
   addProduct,

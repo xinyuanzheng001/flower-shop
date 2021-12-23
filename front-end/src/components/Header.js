@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
 import { useNavigate } from 'react-router'
 import SearchBox from './SearchBox'
+import NavigationBar from './NavigationBar'
 
 const Header = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const logoutHandler = () => {
@@ -35,7 +37,10 @@ const Header = () => {
           <Navbar.Brand as={Link} to='/'>
             Flower Shop
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          <Navbar.Toggle
+            aria-controls='basic-navbar-nav'
+            onClick={() => setIsOpen(!isOpen)}
+          />
           <Navbar.Collapse id='basic-navbar-nav'>
             <SearchBox />
             <Nav className='ml-auto'>
@@ -45,20 +50,22 @@ const Header = () => {
               </Nav.Link>
               {userInfo ? (
                 userInfo.isAdmin ? (
-                  <NavDropdown title='Admin' id='admin'>
-                    <NavDropdown.Item onClick={adminHandle}>
-                      Users
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={productHandler}>
-                      Products
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={orderHandler}>
-                      Orders
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <>
+                    <NavDropdown title='Admin' id='admin'>
+                      <NavDropdown.Item onClick={adminHandle}>
+                        Users
+                      </NavDropdown.Item>
+                      <NavDropdown.Item onClick={productHandler}>
+                        Products
+                      </NavDropdown.Item>
+                      <NavDropdown.Item onClick={orderHandler}>
+                        Orders
+                      </NavDropdown.Item>
+                      <NavDropdown.Item onClick={logoutHandler}>
+                        Logout
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
                 ) : (
                   <NavDropdown title={userInfo.name} id='username'>
                     <NavDropdown.Item onClick={profileHandler}>
@@ -76,6 +83,19 @@ const Header = () => {
                   Sign In
                 </Nav.Link>
               )}
+              <div className='dropdown-control'>
+                <NavDropdown title='Category' id='category'>
+                  <NavDropdown.Item>Roses</NavDropdown.Item>
+                  <NavDropdown.Item>White flower</NavDropdown.Item>
+                  <NavDropdown.Item>Red flower</NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link as={Link} to='/vip'>
+                  VIP
+                </Nav.Link>
+                <Nav.Link as={Link} to='/about'>
+                  About Us
+                </Nav.Link>
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>

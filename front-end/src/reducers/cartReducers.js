@@ -4,6 +4,10 @@ import {
   CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_ITEM_RESET,
+  CART_SAVE_RECEIVE_METHOD,
+  CART_SAVE_RECEIVE_TIME,
+  CART_SAVE_RECEIVE_PHONE_NUMBER,
+  CART_SAVE_RECEIVE_NAME,
 } from '../constants/cartConstants'
 
 export const cartReducer = (
@@ -43,6 +47,26 @@ export const cartReducer = (
       return {
         ...state,
         paymentMethod: action.payload,
+      }
+    case CART_SAVE_RECEIVE_METHOD:
+      return {
+        ...state,
+        receiveMethod: action.payload,
+      }
+    case CART_SAVE_RECEIVE_TIME:
+      return {
+        ...state,
+        receiveTime: action.payload,
+      }
+    case CART_SAVE_RECEIVE_PHONE_NUMBER:
+      return {
+        ...state,
+        receivePhoneNumber: action.payload,
+      }
+    case CART_SAVE_RECEIVE_NAME:
+      return {
+        ...state,
+        receiveName: action.payload,
       }
     case CART_ITEM_RESET:
       return {

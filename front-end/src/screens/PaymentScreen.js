@@ -9,7 +9,8 @@ import { savePaymentMethod } from '../actions/cartActions'
 const PaymentScreen = () => {
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
-  const [paymentMethod, setPaymentMethod] = useState('Paypal')
+  const [paymentMethod, setPaymentMethod] = useState('')
+  const [selectPaymentMethod, setSelectPaymentMethod] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -36,13 +37,33 @@ const PaymentScreen = () => {
               value='PayPal'
               name='paymentMethod'
               id='PayPal'
-              checked
-              onChange={(e) => setPaymentMethod(e.target.value)}
+              // checked
+              onClick={(e) => {
+                setPaymentMethod(e.target.value)
+                setSelectPaymentMethod(true)
+              }}
+            />
+            <Form.Check
+              type='radio'
+              label='Cash'
+              value='Cash'
+              name='paymentMethod'
+              id='cash'
+              // checked
+              onClick={(e) => {
+                setPaymentMethod(e.target.value)
+                setSelectPaymentMethod(true)
+              }}
             />
           </Col>
         </Form.Group>
 
-        <Button type='submit' variant='primary' className='my-3'>
+        <Button
+          type='submit'
+          variant='primary'
+          className='my-3'
+          disabled={!selectPaymentMethod}
+        >
           Continue
         </Button>
       </Form>

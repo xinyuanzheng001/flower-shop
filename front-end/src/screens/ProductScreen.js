@@ -55,7 +55,7 @@ const ProductScreen = () => {
   }
   return (
     <div>
-      <Link className='btn btn-light my-3' to='/'>
+      <Link className='btn btn-light my-3' onClick={() => navigate(-1)} to='/'>
         <strong>Go Back</strong>
       </Link>
       {loading ? (

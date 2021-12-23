@@ -3,6 +3,10 @@ import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
   CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_RECEIVE_METHOD,
+  CART_SAVE_RECEIVE_NAME,
+  CART_SAVE_RECEIVE_PHONE_NUMBER,
+  CART_SAVE_RECEIVE_TIME,
   CART_SAVE_SHIPPING_ADDRESS,
 } from '../constants/cartConstants'
 
@@ -49,4 +53,46 @@ export const savePaymentMethod = (data) => (dispatch) => {
   })
 
   localStorage.setItem('paymentMethod', JSON.stringify(data))
+}
+
+export const saveReceiveMethod = (data) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_RECEIVE_METHOD,
+    payload: data,
+  })
+  localStorage.setItem('receiveMethod', JSON.stringify(data))
+}
+
+// export const saveReceiveTime = (data) => (dispatch) => {
+//   dispatch({
+//     type: CART_SAVE_RECEIVE_TIME,
+//     payload: data,
+//   })
+//   localStorage.setItem('receiveTime', JSON.stringify(data))
+// }
+
+// export const saveReceivePhoneNumber = (data) => (dispatch) => {
+//   dispatch({
+//     type: CART_SAVE_RECEIVE_PHONE_NUMBER,
+//     payload: data,
+//   })
+//   localStorage.setItem('receivePhoneNumber', JSON.stringify(data))
+// }
+
+export const saveReceiveInfo = (name, phoneNumber, time) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_RECEIVE_TIME,
+    payload: time,
+  })
+  dispatch({
+    type: CART_SAVE_RECEIVE_PHONE_NUMBER,
+    payload: phoneNumber,
+  })
+  dispatch({
+    type: CART_SAVE_RECEIVE_NAME,
+    payload: name,
+  })
+  localStorage.setItem('receiveTime', JSON.stringify(time))
+  localStorage.setItem('receivePhoneNumber', JSON.stringify(phoneNumber))
+  localStorage.setItem('receiveName', JSON.stringify(name))
 }

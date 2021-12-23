@@ -40,13 +40,21 @@ const OrderListScreen = () => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            className='table-sm'
+            style={{ textAlign: 'center' }}
+          >
             <thead>
               <tr>
                 <th>ID</th>
                 <th>CUSTOMER</th>
                 <th>PRICE</th>
                 <th>ORDER AT</th>
+                <th>PAYMENT METHOD</th>
                 <th>PAID</th>
                 <th>DELIVERED</th>
               </tr>
@@ -58,6 +66,7 @@ const OrderListScreen = () => {
                   <td>{order.user.name}</td>
                   <td>${order.totalPrice}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{order.paymentMethod}</td>
                   <td>
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)

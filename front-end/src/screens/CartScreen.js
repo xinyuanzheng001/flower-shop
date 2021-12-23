@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { addToCart, removeFromCart } from '../actions/cartActions'
+import {
+  addToCart,
+  removeFromCart,
+  saveReceiveMethod,
+} from '../actions/cartActions'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { goToShipping } from '../actions/goToShipping'
 import Meta from '../components/Meta'
@@ -12,6 +16,8 @@ const CartScreen = () => {
   const { id } = useParams()
 
   const navigate = useNavigate()
+  const [receiveMethod, setReceiveMethod] = useState('')
+  const [selectMethod, setSelectMethod] = useState(false)
 
   const qtn = useLocation().search
 
@@ -36,8 +42,13 @@ const CartScreen = () => {
   }
 
   const checkOutHandler = () => {
+    dispatch(saveReceiveMethod(receiveMethod))
     if (userInfo) {
-      navigate('/shipping')
+      if (receiveMethod === 'Delivery') {
+        navigate('/shipping')
+      } else {
+        navigate('/pickup')
+      }
     } else {
       dispatch(goToShipping())
       navigate('/login')
@@ -107,11 +118,40 @@ const CartScreen = () => {
                   .reduce((acc, item) => acc + item.qty * item.price, 0)
                   .toFixed(2)}
               </ListGroup.Item>
+              {cartItems.length !== 0 && (
+                <ListGroup.Item>
+                  <Form>
+                    <Form.Check
+                      type='radio'
+                      label='Delivery'
+                      value='Delivery'
+                      name='receiveMethod'
+                      id='Delivery'
+                      // checked
+                      onClick={(e) => {
+                        setReceiveMethod('Delivery')
+                        setSelectMethod(true)
+                      }}
+                    ></Form.Check>
+                    <Form.Check
+                      type='radio'
+                      label='Pick Up'
+                      value='Pick Up'
+                      name='receiveMethod'
+                      id='PickUp'
+                      onClick={(e) => {
+                        setReceiveMethod('Pick Up')
+                        setSelectMethod(true)
+                      }}
+                    ></Form.Check>
+                  </Form>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 <Button
                   type='button'
                   className='btn-block'
-                  disabled={cartItems.length === 0}
+                  disabled={cartItems.length === 0 || !selectMethod}
                   onClick={checkOutHandler}
                 >
                   Check Out

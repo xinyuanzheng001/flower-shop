@@ -14,6 +14,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice,
+    receiveMethod,
   } = req.body
 
   if (orderItems && orderItems.length === 0) {
@@ -30,6 +31,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       taxPrice,
       shippingPrice,
       totalPrice,
+      receiveMethod,
     })
     const createdOrder = await order.save()
     res.status(201).json(createdOrder)
@@ -133,6 +135,8 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (order) {
     order.isDelivered = true
+    order.isPickUped = true
+    order.pickUpAt = Date.now()
     order.deliveredAt = Date.now()
     const updatedOrder = await order.save()
     res.json(updatedOrder)

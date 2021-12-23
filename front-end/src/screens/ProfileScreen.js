@@ -14,6 +14,7 @@ import Meta from '../components/Meta'
 const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
@@ -50,6 +51,7 @@ const ProfileScreen = () => {
       } else {
         setName(user.name)
         setEmail(user.email)
+        setPhoneNumber(user.phoneNumber)
       }
     }
   }, [dispatch, navigate, userInfo, user, pageNumber])
@@ -60,7 +62,9 @@ const ProfileScreen = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }))
+      dispatch(
+        updateUserProfile({ id: user._id, name, email, password, phoneNumber })
+      )
     }
   }
 
@@ -82,6 +86,14 @@ const ProfileScreen = () => {
                 //   placeholder={user.name}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='phonenumber'>
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type='phonenumber'
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='email'>

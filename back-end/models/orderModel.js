@@ -64,12 +64,23 @@ const orderSchema = mongoose.Schema(
     paidAt: {
       type: Date,
     },
+    receiveMethod: {
+      type: String,
+    },
     isDelivered: {
       type: Boolean,
       required: true,
       default: false,
     },
     deliveredAt: {
+      type: Date,
+    },
+    isPickUped: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    pickupAt: {
       type: Date,
     },
   },
