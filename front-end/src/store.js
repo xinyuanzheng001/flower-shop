@@ -33,8 +33,11 @@ import {
   orderDelieverReducer,
   orderReceiveMethodReducer,
 } from './reducers/orderReducer'
+import { adminReducer, adminUpdateParamsReducer } from './reducers/adminReducer'
 
 const reducer = combineReducers({
+  admin: adminReducer,
+  adminUpdateParams: adminUpdateParamsReducer,
   productList: productListReducer,
   productListVip: productListVipReducer,
   productListCategory: productListCategoryReducer,

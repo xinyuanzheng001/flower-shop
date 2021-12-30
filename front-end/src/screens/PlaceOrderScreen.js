@@ -11,13 +11,16 @@ import emailjs from 'emailjs-com'
 const PlaceOrderScreen = () => {
   const cart = useSelector((state) => state.cart)
   const [cardMessage, setCardMessage] = useState('')
+  const admin = useSelector((state) => state.admin)
+  const { params } = admin
   const dispatch = useDispatch()
   const navigate = useNavigate()
   cart.itemPrice = cart.cartItems
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2)
-  cart.shippingPrice = (0).toFixed(2)
-  cart.taxPrice = Number(cart.itemPrice * 0.15).toFixed(2)
+  cart.shippingPrice =
+    cart.receiveMethod === 'Delivery' ? params.deliveryCharge.toFixed(2) : 0
+  cart.taxPrice = Number((cart.itemPrice * params.taxRate) / 100).toFixed(2)
   cart.totalPrice = (
     Number(cart.itemPrice) +
     Number(cart.shippingPrice) +

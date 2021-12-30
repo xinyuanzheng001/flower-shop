@@ -36,7 +36,7 @@ const LogInScreen = () => {
     } else if (userInfo) {
       navigate(redirect)
     }
-  }, [navigate, userInfo, redirect, dispatch, goToShipping])
+  }, [navigate, userInfo, redirect, dispatch, goToShipping, receiveMethod])
 
   const submitHandler = (e) => {
     e.preventDefault()

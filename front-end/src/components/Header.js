@@ -31,6 +31,9 @@ const Header = () => {
   const orderHandler = () => {
     navigate('/admin/orders')
   }
+  const editHandler = () => {
+    navigate('/admin/edit')
+  }
 
   return (
     <header>
@@ -62,6 +65,9 @@ const Header = () => {
                       </NavDropdown.Item>
                       <NavDropdown.Item onClick={orderHandler}>
                         Orders
+                      </NavDropdown.Item>
+                      <NavDropdown.Item onClick={editHandler}>
+                        Edit
                       </NavDropdown.Item>
                       <NavDropdown.Item onClick={logoutHandler}>
                         Logout

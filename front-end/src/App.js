@@ -22,6 +22,7 @@ import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import HomeVipScreen from './screens/HomeVipScreen'
+import EditScreen from './screens/EditScreen'
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
             <Route path='/payment' element={<PaymentScreen />} />
             <Route path='/placeorder' element={<PlaceOrderScreen />} />
             <Route path='/order/:id' element={<OrderScreen />} />
+            <Route path='/admin/edit' element={<EditScreen />} exact />
             <Route path='/admin/orders' element={<OrderListScreen />} exact />
             <Route
               path='/admin/orders/:pageNumber'
