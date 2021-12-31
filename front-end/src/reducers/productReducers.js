@@ -18,6 +18,9 @@ import {
   PRODUCT_LIST_VIP_FAIL,
   PRODUCT_LIST_VIP_REQUEST,
   PRODUCT_LIST_VIP_SUCCESS,
+  PRODUCT_LIST_WITH_CATEGORY_FAIL,
+  PRODUCT_LIST_WITH_CATEGORY_REQUEST,
+  PRODUCT_LIST_WITH_CATEGORY_SUCCESS,
   PRODUCT_REVIEW_FAIL,
   PRODUCT_REVIEW_REQUEST,
   PRODUCT_REVIEW_RESET,
@@ -43,6 +46,28 @@ export const productListReducer = (state = { products: [] }, action) => {
         page: action.payload.page,
       }
     case PRODUCT_LIST_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const productListWithCategoryReducer = (
+  state = { products: [], category: '' },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_LIST_WITH_CATEGORY_REQUEST:
+      return { loading: true, products: [], category: '' }
+    case PRODUCT_LIST_WITH_CATEGORY_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        category: action.payload.categoryName,
+      }
+    case PRODUCT_LIST_WITH_CATEGORY_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

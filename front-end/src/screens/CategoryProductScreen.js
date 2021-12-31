@@ -3,19 +3,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
-import { listVipProducts } from '../actions/productActions'
+import { listCategoryProducts } from '../actions/productActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import CategoryPaginate from '../components/CategoryPaginate'
 import ProductCarousel from '../components/ProductCarousel'
 import Meta from '../components/Meta'
-const HomeVipScreen = () => {
+const CategoryProductScreen = () => {
   const dispatch = useDispatch()
+  const { category } = useParams()
   const { pageNumber } = useParams() || 1
-  const productList = useSelector((state) => state.productListVip)
+  const productListWithCategory = useSelector(
+    (state) => state.productListWithCategory
+  )
 
   //grab states
-  const { loading, error, products, pages, page } = productList
+  const { loading, error, products, pages, page } = productListWithCategory
   // useEffect(() => {
   //     const fetchProducts = async () => {
   //         const { data } = await axios.get('/api/products')
@@ -25,12 +28,13 @@ const HomeVipScreen = () => {
   //     fetchProducts()
   // }, [])
   useEffect(() => {
-    dispatch(listVipProducts(pageNumber))
-  }, [dispatch, pageNumber])
+    dispatch(listCategoryProducts(pageNumber, category))
+    // console.log(category.replace(/\s+/g, ''))
+  }, [dispatch, pageNumber, category])
 
   return (
     <div>
-      <Meta title='Vip Products' />
+      <Meta title={`${category}`} />
       <ProductCarousel />
       <h1>Latest Products</h1>
       {loading ? (
@@ -53,11 +57,18 @@ const HomeVipScreen = () => {
               </Col>
             ))}
           </Row>
-          <CategoryPaginate pages={pages} page={page} vip={true} />
+          <CategoryPaginate category={category} pages={pages} page={page} />
         </>
       )}
+      {/* //   <Row>
+    //     {products.map((product) => (
+    //       <Col sm={12} md={6} lg={4} xl={3}>
+    //         <Product product={product} />
+    //       </Col>
+    //     ))}
+    //   </Row> */}
     </div>
   )
 }
 
-export default HomeVipScreen
+export default CategoryProductScreen

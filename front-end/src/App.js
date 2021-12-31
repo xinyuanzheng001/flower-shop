@@ -23,6 +23,7 @@ import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import HomeVipScreen from './screens/HomeVipScreen'
 import EditScreen from './screens/EditScreen'
+import CategoryProductScreen from './screens/CategoryProductScreen'
 
 function App() {
   return (
@@ -39,10 +40,20 @@ function App() {
               element={<HomeScreen />}
               exact
             />
-            <Route path='/page/:pageNumber' element={<HomeScreen />} />
+            <Route path='/page/:pageNumber' element={<HomeScreen />} exact />
             <Route path='/vip' element={<HomeVipScreen />} exact />
             <Route path='/vip/:pageNumber' element={<HomeVipScreen />} exact />
             <Route path='/vip/product/:id' element={<ProductScreen />} exact />
+            <Route
+              path='/:category'
+              element={<CategoryProductScreen />}
+              exact
+            />
+            <Route
+              path='/:category/:pageNumber'
+              element={<CategoryProductScreen />}
+              exact
+            />
             <Route path='/product/:id' element={<ProductScreen />} />
             <Route path='/cart'>
               <Route path='' element={<CartScreen />} />

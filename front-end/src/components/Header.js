@@ -13,7 +13,7 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const productListCategory = useSelector((state) => state.productListCategory)
-  const { productCategory, success } = productListCategory
+  const { productCategory } = productListCategory
   const { categories } = productCategory
   const logoutHandler = () => {
     dispatch(logout())
@@ -95,7 +95,11 @@ const Header = () => {
                 <NavDropdown title='Category' id='category'>
                   {categories &&
                     categories.map((category) => (
-                      <NavDropdown.Item key={category.id}>
+                      <NavDropdown.Item
+                        key={category.id}
+                        as={Link}
+                        to={`/${category.category}`}
+                      >
                         {category.category}
                       </NavDropdown.Item>
                     ))}

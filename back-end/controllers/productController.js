@@ -38,6 +38,20 @@ const getVipProducts = asyncHandler(async (req, res) => {
   res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
+// @desc  Fetch special category products
+// @route   GET /api/products/category/:category
+// @access  Public
+const getCategoryProducts = asyncHandler(async (req, res) => {
+  const pageSize = 12
+  const page = Number(req.query.pageNumber) || 1
+  const categoryName = req.params.category
+  const count = await Product.countDocuments({ category: categoryName })
+  const products = await Product.find({ category: categoryName })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+  res.json({ products, page, pages: Math.ceil(count / pageSize), categoryName })
+})
+
 // @desc Fetch single product
 // @route GET /api/products/:id
 // @access Public
@@ -167,6 +181,7 @@ const getTopProducts = asyncHandler(async (req, res) => {
 export {
   getProducts,
   getVipProducts,
+  getCategoryProducts,
   getProductByID,
   deleteProductByID,
   addProduct,

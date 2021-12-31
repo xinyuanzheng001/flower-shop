@@ -3,18 +3,17 @@ import {
   Navbar,
   Nav,
   Container,
-  Dropdown,
   DropdownButton,
   Button,
   NavDropdown,
 } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router'
+// import { useNavigate } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { listProductCategory } from '../actions/productActions'
 
 const NavigationBar = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const dispatch = useDispatch()
   const productListCategory = useSelector((state) => state.productListCategory)
   const { productCategory, success } = productListCategory
@@ -54,7 +53,11 @@ const NavigationBar = () => {
               >
                 {categories &&
                   categories.map((category) => (
-                    <NavDropdown.Item key={category.id}>
+                    <NavDropdown.Item
+                      key={category.id}
+                      as={Link}
+                      to={`/${category.category}`}
+                    >
                       {category.category}
                     </NavDropdown.Item>
                   ))}

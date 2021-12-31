@@ -12,6 +12,7 @@ const EditScreen = () => {
   const [taxRate, setTaxRate] = useState(0)
   const [deliveryCharge, setDeliveryCharge] = useState(0)
   const [discount, setDiscount] = useState(0)
+  const [pickUpAddress, setPickUpAddress] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const admin = useSelector((state) => state.admin)
@@ -27,7 +28,7 @@ const EditScreen = () => {
       setDeliveryCharge(params.deliveryCharge)
       setDiscount(params.discount)
     }
-  }, [dispatch, params])
+  }, [dispatch, params, success])
 
   const submitHandler = () => {
     dispatch(updateParams({ taxRate, deliveryCharge, discount }))
@@ -76,6 +77,23 @@ const EditScreen = () => {
               style={{ marginLeft: 'auto' }}
               onChange={(e) => setDiscount(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='pickupaddress' className='form-inline mb-3'>
+            <Form.Label>Pick Up Address:</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter Pick Up Address'
+              style={{ marginLeft: 'auto' }}
+              value={pickUpAddress}
+              onChange={(e) => setPickUpAddress(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='deliverArea' className='form-inline mb-3'>
+            <Form.Label>Delivery Area:</Form.Label>
+            <p style={{ marginLeft: 'auto', maxWidth: '218px' }}>
+              Quincy, Boston, Reading, Braintree, North Quincy, Newton, Milton,
+              North Reading, Lynnfield, Wakefield
+            </p>
           </Form.Group>
 
           <Button type='submit' variant='primary' className='my-3'>

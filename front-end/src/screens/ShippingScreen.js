@@ -6,7 +6,7 @@ import CheckOutSteps from '../components/CheckOutSteps'
 import { useNavigate } from 'react-router'
 import { saveShippingAddress } from '../actions/cartActions'
 import Meta from '../components/Meta'
-import DatePicker from 'react-datepicker'
+// import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const ShippingScreen = () => {

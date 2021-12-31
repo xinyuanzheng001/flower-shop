@@ -16,6 +16,9 @@ import {
   PRODUCT_LIST_VIP_FAIL,
   PRODUCT_LIST_VIP_REQUEST,
   PRODUCT_LIST_VIP_SUCCESS,
+  PRODUCT_LIST_WITH_CATEGORY_FAIL,
+  PRODUCT_LIST_WITH_CATEGORY_REQUEST,
+  PRODUCT_LIST_WITH_CATEGORY_SUCCESS,
   PRODUCT_REVIEW_FAIL,
   PRODUCT_REVIEW_REQUEST,
   PRODUCT_REVIEW_SUCCESS,
@@ -91,6 +94,26 @@ export const listVipProducts =
     } catch (error) {
       dispatch({
         type: PRODUCT_LIST_VIP_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const listCategoryProducts =
+  (pageNumber = '', category) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_WITH_CATEGORY_REQUEST })
+      const { data } = await axios.get(
+        `/api/products/category/${category}?pageNumber=${pageNumber}`
+      )
+      dispatch({ type: PRODUCT_LIST_WITH_CATEGORY_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_WITH_CATEGORY_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

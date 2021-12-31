@@ -11,6 +11,7 @@ import {
   productTopRatedReducer,
   productListVipReducer,
   productListCategoryReducer,
+  productListWithCategoryReducer,
 } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
@@ -41,6 +42,7 @@ const reducer = combineReducers({
   productList: productListReducer,
   productListVip: productListVipReducer,
   productListCategory: productListCategoryReducer,
+  productListWithCategory: productListWithCategoryReducer,
   productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,

@@ -5,6 +5,7 @@ import {
   addProduct,
   addProductReview,
   deleteProductByID,
+  getCategoryProducts,
   getProductByID,
   getProducts,
   getTopProducts,
@@ -47,6 +48,7 @@ router.route('/').get(getProducts).post(protect, admin, addProduct)
 // )
 router.route('/top').get(getTopProducts)
 router.route('/vip').get(getVipProducts)
+router.route('/category/:category').get(getCategoryProducts)
 router
   .route('/:id')
   .get(getProductByID)
