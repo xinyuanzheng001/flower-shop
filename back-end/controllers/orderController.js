@@ -8,15 +8,24 @@ import Order from '../models/orderModel.js'
 const addOrderItems = asyncHandler(async (req, res) => {
   const {
     orderItems,
-    shippingAddress,
     paymentMethod,
     itemPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
     receiveMethod,
+    receiverInfo,
+    isPaid,
+    paidAt,
+    paymentResult,
   } = req.body
 
+  const result = {
+    id: paymentResult.id,
+    status: paymentResult.status,
+    update_time: paymentResult.update_time,
+    email_address: paymentResult.email_address,
+  }
   if (orderItems && orderItems.length === 0) {
     res.status(400)
     throw new Error('No order items')
@@ -25,13 +34,16 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const order = new Order({
       orderItems,
       user: req.user._id,
-      shippingAddress,
       paymentMethod,
       itemPrice,
       taxPrice,
       shippingPrice,
       totalPrice,
       receiveMethod,
+      receiverInfo,
+      isPaid,
+      paidAt,
+      paymentResult: result,
     })
     const createdOrder = await order.save()
     res.status(201).json(createdOrder)

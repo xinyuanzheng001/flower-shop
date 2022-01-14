@@ -92,3 +92,15 @@ h2 {
     display: none;
   }
 }
+
+i:hover {
+  cursor: pointer;
+}
+
+/* .control:hover .div-control {
+  transform: translateY(15px);
+}
+
+.div-control {
+  transition: 1s;
+} */

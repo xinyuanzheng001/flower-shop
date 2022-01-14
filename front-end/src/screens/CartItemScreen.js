@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-  Form,
-  FormGroup,
-} from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails, reviewProduct } from '../actions/productActions'
@@ -19,9 +10,29 @@ import { PRODUCT_REVIEW_RESET } from '../constants/productConstants'
 import Meta from '../components/Meta'
 import { addToCart } from '../actions/cartActions'
 
-const ProductScreen = () => {
+const CartItemScreen = () => {
   const { id } = useParams()
   // const [product, setProduct] = useState({})
+
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+  const itemDetail = cartItems[id]
+
+  const navigate = useNavigate()
+  const [qty, setQty] = useState(itemDetail.qty)
+  const [comment, setComment] = useState('')
+  const [rating, setRating] = useState(0)
+  const [showImage, setShowImage] = useState('')
+  const [selectColor, setSelectColor] = useState(itemDetail.color)
+  const [qtyAmount, setQtyAmount] = useState(itemDetail.qtyAmount)
+  const [qtyAmountPrice, setQtyAmountPrice] = useState(
+    itemDetail.qtyAmountPrice
+  )
+  const [price, setPrice] = useState(itemDetail.price)
+  const [cardMessage, setCardMessage] = useState(itemDetail.cardMessage)
+  const [specialInstruction, setSpecialInstruction] = useState(
+    itemDetail.specialInstruction
+  )
 
   const dispatch = useDispatch()
 
@@ -32,18 +43,6 @@ const ProductScreen = () => {
 
   const productReview = useSelector((state) => state.productReview)
   const { success: successReview, error: errorReview } = productReview
-
-  const navigate = useNavigate()
-  const [qty, setQty] = useState(1)
-  const [comment, setComment] = useState('')
-  const [rating, setRating] = useState(0)
-  const [showImage, setShowImage] = useState('')
-  const [selectColor, setSelectColor] = useState('')
-  const [qtyAmount, setQtyAmount] = useState(0)
-  const [qtyAmountPrice, setQtyAmountPrice] = useState(0)
-  const [price, setPrice] = useState(0)
-  const [cardMessage, setCardMessage] = useState('')
-  const [specialInstruction, setSpecialInstruction] = useState('')
 
   useEffect(() => {
     // const fetchProduct = async () => {
@@ -59,8 +58,8 @@ const ProductScreen = () => {
       setRating(0)
       setComment('')
     }
-    dispatch(listProductDetails(id))
-  }, [dispatch, id, successReview])
+    dispatch(listProductDetails(itemDetail.product))
+  }, [dispatch, itemDetail.product, successReview])
 
   const addToCartHandler = () => {
     dispatch(
@@ -114,12 +113,12 @@ const ProductScreen = () => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Meta title={product.name} />
+          <Meta title={itemDetail.name} />
           <Row>
             <Col md={6}>
               <Image
-                src={showImage ? showImage : product.primeImage}
-                alt={product.name}
+                src={showImage ? showImage : itemDetail.primeImage}
+                alt={itemDetail.name}
                 style={{ width: '100%', maxHeight: '450px' }}
                 fluid
               />
@@ -132,8 +131,8 @@ const ProductScreen = () => {
                   flexWrap: 'wrap',
                 }}
               >
-                {product.image &&
-                  product.image.map((i, index) => (
+                {itemDetail.image &&
+                  itemDetail.image.map((i, index) => (
                     <Image
                       src={i}
                       key={index}
@@ -153,7 +152,7 @@ const ProductScreen = () => {
             <Col md={6}>
               <Form onSubmit={addToCartHandler}>
                 <ListGroup variant='flush'>
-                  <ListGroup.Item>{product.name}</ListGroup.Item>
+                  <ListGroup.Item>{itemDetail.name}</ListGroup.Item>
                   <ListGroup.Item>
                     <Rating
                       value={product.rating}
@@ -161,7 +160,7 @@ const ProductScreen = () => {
                     />
                   </ListGroup.Item>
                   <ListGroup.Item className='font-weight-bold'>
-                    Price: ${price ? price : product.price}
+                    Price: ${price ? price : itemDetail.price}
                   </ListGroup.Item>
                   {product.colorOptions && product.colorOptions.length !== 0 && (
                     <ListGroup.Item>
@@ -255,7 +254,7 @@ const ProductScreen = () => {
                       type='submit'
                       // onClick={addToCartHandler}
                     >
-                      Add To Cart
+                      Update
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
@@ -282,47 +281,6 @@ const ProductScreen = () => {
                     <p>{review.comment}</p>
                   </ListGroup.Item>
                 ))}
-                <ListGroup.Item>
-                  <h2>Write a Review</h2>
-                  {errorReview && (
-                    <Message variant='danger'>{errorReview}</Message>
-                  )}
-                  {userInfo ? (
-                    <Form onSubmit={submitHandler}>
-                      <Form.Group controlId='rating'>
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as='select'
-                          value={rating}
-                          onChange={(e) => setRating(e.target.value)}
-                        >
-                          <option value=''>Select...</option>
-                          <option value='1'>1 - Poor</option>
-                          <option value='2'>2 - Fair</option>
-                          <option value='3'>3 - Good</option>
-                          <option value='4'>4 - Very Good</option>
-                          <option value='5'>5 - Excellent</option>
-                        </Form.Control>
-                      </Form.Group>
-                      <Form.Group controlId='comment'>
-                        <Form.Label>Comment</Form.Label>
-                        <Form.Control
-                          as='textarea'
-                          row='3'
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        ></Form.Control>
-                      </Form.Group>
-                      <Button type='submit' variant='primary'>
-                        Submit
-                      </Button>
-                    </Form>
-                  ) : (
-                    <Message>
-                      Please <Link to='/login'>Sign In</Link> to write a review
-                    </Message>
-                  )}
-                </ListGroup.Item>
               </ListGroup>
             </Col>
           </Row>
@@ -332,4 +290,4 @@ const ProductScreen = () => {
   )
 }
 
-export default ProductScreen
+export default CartItemScreen

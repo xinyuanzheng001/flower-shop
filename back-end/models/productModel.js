@@ -15,7 +15,13 @@ const reviewSchema = mongoose.Schema(
     timestamps: true,
   }
 )
-
+const qtyOptionSchema = mongoose.Schema({
+  qty: { type: Number, required: true },
+  qtyPrice: { type: Number, required: true },
+})
+const colorOptionSchema = mongoose.Schema({
+  color: { type: String },
+})
 const productSchema = mongoose.Schema(
   {
     // user: {
@@ -27,7 +33,8 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
+    image: [{ type: String, required: true }],
+    primeImage: {
       type: String,
       required: true,
     },
@@ -60,6 +67,8 @@ const productSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    colorOptions: [colorOptionSchema],
+    qtyOptions: [qtyOptionSchema],
   },
   {
     timestamps: true,

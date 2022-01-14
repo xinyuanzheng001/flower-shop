@@ -9,6 +9,7 @@ import Message from '../components/Message'
 import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
 import Meta from '../components/Meta'
+import { getParams } from '../actions/adminAction'
 const HomeScreen = () => {
   const dispatch = useDispatch()
   const { keyword } = useParams()
@@ -27,6 +28,7 @@ const HomeScreen = () => {
   // }, [])
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber))
+    dispatch(getParams())
   }, [dispatch, keyword, pageNumber])
 
   return (

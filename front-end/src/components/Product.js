@@ -8,7 +8,7 @@ const Product = ({ product }) => {
     <Card className='my-3 p-3 rounded'>
       <Link to={`/product/${product._id}`}>
         <Card.Img
-          src={product.image}
+          src={product.primeImage}
           variant='top'
           // style={{ minHeight: '204px', maxHeight: '476px' }}
           // style={{ width: '100%', maxHeight: '100%' }}

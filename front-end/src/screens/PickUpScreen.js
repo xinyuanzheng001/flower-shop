@@ -83,10 +83,10 @@ const PickUpScreen = () => {
             >
               {/* <DatePicker /> */}
             </Form.Control>
-            {pickUpDate.getDate() > 20 ||
+            {/* {pickUpDate.getDate() > 20 ||
               (pickUpDate.getDate() < 12 && (
                 <Message variant='danger'>Invalid Pick Up time</Message>
-              ))}
+              ))} */}
           </Form.Group>
           <Button type='submit' variant='primary' className='my-3'>
             Continue

@@ -14,11 +14,19 @@ import Meta from '../components/Meta'
 const ProductEditScreen = () => {
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState([])
+  const [primeImage, setPrimeImage] = useState('')
   const [vip, setVip] = useState(false)
   const [category, setCategory] = useState('')
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
+  const [qty, setQty] = useState(0)
+  const [qtyPrice, setQtyPrice] = useState(0)
+  const [showQty, setShowQty] = useState('')
+  const [qtyOptions, setQtyOptions] = useState([])
+  const [color, setColor] = useState('')
+  const [showColor, setShowColor] = useState('')
+  const [colorOptions, setColorOptions] = useState([])
   const navigate = useNavigate()
   const { id } = useParams()
 
@@ -50,6 +58,9 @@ const ProductEditScreen = () => {
         setImage(product.image)
         setCategory(product.category)
         setDescription(product.description)
+        setQtyOptions(product.qtyOptions)
+        setColorOptions(product.colorOptions)
+        setPrimeImage(product.primeImage)
         setVip(product.vip)
       }
     }
@@ -57,6 +68,7 @@ const ProductEditScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+    console.log(image)
     dispatch(
       updateProduct({
         id,
@@ -65,14 +77,24 @@ const ProductEditScreen = () => {
         image,
         category,
         description,
+        qtyOptions,
+        colorOptions,
+        primeImage,
         vip,
       })
     )
   }
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
     const formData = new FormData()
-    formData.append('image', file)
+    if (e.target.files.length === 1) {
+      const file = e.target.files[0]
+      formData.append('image', file)
+    } else {
+      for (let i = 0; i < e.target.files.length; i++) {
+        const file = e.target.files[i]
+        formData.append('image', file)
+      }
+    }
     setUploading(true)
     try {
       const config = {
@@ -81,7 +103,9 @@ const ProductEditScreen = () => {
         },
       }
       const { data } = await axios.post('/api/upload', formData, config)
-      setImage(data)
+      const imageList = []
+      data.map((d) => imageList.push('/'.concat(d.path)))
+      setImage(imageList)
       setUploading(false)
     } catch (error) {
       console.error(error)
@@ -89,6 +113,28 @@ const ProductEditScreen = () => {
     }
   }
 
+  const addOptionHandler = () => {
+    setQtyOptions((qtyOptions) => [...qtyOptions, { qty, qtyPrice }])
+    setQty('')
+    setQtyPrice('')
+    console.log(qtyOptions)
+  }
+  const deleteQtyHandler = () => {
+    setQtyOptions(qtyOptions.filter((option) => option.qty !== showQty))
+    if (qtyOptions.length >= 1) {
+      setShowQty(qtyOptions[0].qty)
+    }
+  }
+  const addColorHandler = () => {
+    setColorOptions((colorOptions) => [...colorOptions, { color }])
+    setColor('')
+  }
+  const deleteColorHandler = () => {
+    setColorOptions(colorOptions.filter((option) => option.color !== showColor))
+    if (colorOptions.length >= 1) {
+      setShowColor(colorOptions[0].color)
+    }
+  }
   return (
     <>
       <Meta title='Product Edit' />
@@ -120,20 +166,38 @@ const ProductEditScreen = () => {
           </Form.Group>
           <Form.Group controlId='image'>
             <Form.Label>Image</Form.Label>
-            <Form.Control
+            {/* <Form.Control
               type='text'
               placeholder='Enter image URL'
               value={image}
               onChange={(e) => setImage(e.target.value)}
-            ></Form.Control>
+            ></Form.Control> */}
             <Form.Control
               // id='image-file'
+              // type='file'
               type='file'
               lable='Choose File'
+              multiple
               // custom
               onChange={uploadFileHandler}
             ></Form.Control>
             {uploading && <Loader />}
+          </Form.Group>
+          <Form.Group controlId='primeimage'>
+            <Form.Label>Select Prime Image</Form.Label>
+            <Form.Control
+              as='select'
+              value={primeImage}
+              onChange={(e) => setPrimeImage(e.target.value)}
+              required={true}
+            >
+              <option value=''>Choose Prime Image</option>
+              {image.map((i, index) => (
+                <option value={i} key={index}>
+                  {i}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
 
           <Form.Group controlId='category'>
@@ -145,7 +209,7 @@ const ProductEditScreen = () => {
               placeholder='dasdsad'
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option>Choose Category</option>
+              <option value=''>Choose Category</option>
               {categories &&
                 categories.map((category) => (
                   <option value={category.category} key={category._id}>
@@ -163,6 +227,88 @@ const ProductEditScreen = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId='qtyoption'>
+            <Form.Label>QTY Options</Form.Label>
+            <div className='form-inline'>
+              <Form.Control
+                as='select'
+                value={showQty}
+                onChange={(e) => setShowQty(e.target.value)}
+                style={{ width: '50%' }}
+              >
+                {qtyOptions.map((option, index) => (
+                  <option value={option.qty} key={index}>
+                    {option.qty}朵 - ${option.qtyPrice}
+                  </option>
+                ))}
+              </Form.Control>
+              <i
+                className='fas fa-times ml-3'
+                style={{ color: 'red' }}
+                onClick={deleteQtyHandler}
+              ></i>
+            </div>
+          </Form.Group>
+          <Form.Group controlId='addqtyoption'>
+            <Form.Label>Add QTY Options</Form.Label>
+            <div className='form-inline'>
+              <Form.Control
+                type='number'
+                value={qty}
+                onChange={(e) => setQty(e.target.value)}
+                style={{ width: '35%', marginRight: '5px' }}
+              ></Form.Control>
+              <Form.Control
+                type='number'
+                value={qtyPrice}
+                onChange={(e) => setQtyPrice(e.target.value)}
+                style={{ width: '35%' }}
+              ></Form.Control>
+              <i
+                className='fas fa-plus ml-3'
+                style={{ color: 'green' }}
+                onClick={addOptionHandler}
+              ></i>
+            </div>
+          </Form.Group>
+          <Form.Group controlId='colorOption'>
+            <Form.Label>Color Options</Form.Label>
+            <div className='form-inline'>
+              <Form.Control
+                as='select'
+                value={showColor}
+                onChange={(e) => setColorOptions(e.target.value)}
+                style={{ width: '50%' }}
+              >
+                {colorOptions.map((color, index) => (
+                  <option key={index} value={color.color}>
+                    {color.color}
+                  </option>
+                ))}
+              </Form.Control>
+              <i
+                className='fas fa-times ml-3'
+                style={{ color: 'red' }}
+                onClick={deleteColorHandler}
+              ></i>
+            </div>
+          </Form.Group>
+          <Form.Group controlId='addcoloroption'>
+            <Form.Label>Add Color Options</Form.Label>
+            <div className='form-inline'>
+              <Form.Control
+                type='text'
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                style={{ width: '50%' }}
+              ></Form.Control>
+              <i
+                className='fas fa-plus ml-3'
+                style={{ color: 'green' }}
+                onClick={addColorHandler}
+              ></i>
+            </div>
           </Form.Group>
           <Form.Group controlId='vip'>
             <Form.Check

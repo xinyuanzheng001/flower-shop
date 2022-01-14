@@ -90,7 +90,7 @@ const EditScreen = () => {
           </Form.Group>
           <Form.Group controlId='deliverArea' className='form-inline mb-3'>
             <Form.Label>Delivery Area:</Form.Label>
-            <p style={{ marginLeft: 'auto', maxWidth: '218px' }}>
+            <p style={{ marginLeft: 'auto', maxWidth: '218 px' }}>
               Quincy, Boston, Reading, Braintree, North Quincy, Newton, Milton,
               North Reading, Lynnfield, Wakefield
             </p>

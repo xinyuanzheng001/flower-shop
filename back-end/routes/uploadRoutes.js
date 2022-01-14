@@ -16,28 +16,34 @@ const storage = multer.diskStorage({
   },
 })
 
-function checkFileType(file, cb) {
-  const fileType = /jpg|jpeg|png/
-  const extname = fileType.test(
-    path.extname(file.originalname).toLocaleLowerCase()
-  )
-  const mimetype = fileType.test(file.mimetype)
+// function checkFileType(file, cb) {
+//   const fileType = /jpg|jpeg|png/
+//   const extname = fileType.test(
+//     path.extname(file.originalname).toLocaleLowerCase()
+//   )
+//   const mimetype = fileType.test(file.mimetype)
 
-  if (extname && mimetype) {
-    return cb(null, true)
-  } else {
-    cb('Images only!')
-  }
-}
+//   if (extname && mimetype) {
+//     return cb(null, true)
+//   } else {
+//     cb('Images only!')
+//   }
+// }
 const upload = multer({
   storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb)
-  },
+  // fileFilter: function (req, file, cb) {
+  //   checkFileType(file, cb)
+  // },
 })
 
-router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path}`)
+// router.post('/', upload.single('image'), (req, res) => {
+//   res.send(`/${req.file.path}`)
+// })
+router.post('/', upload.array('image'), (req, res) => {
+  // res.send(`/${req.file.path}`)
+  const files = req.files
+
+  res.json(files)
 })
 
 export default router

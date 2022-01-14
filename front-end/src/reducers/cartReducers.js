@@ -8,6 +8,7 @@ import {
   CART_SAVE_RECEIVE_TIME,
   CART_SAVE_RECEIVE_PHONE_NUMBER,
   CART_SAVE_RECEIVE_NAME,
+  CART_SAVE_RECEIVER_INFO,
 } from '../constants/cartConstants'
 
 export const cartReducer = (
@@ -67,6 +68,11 @@ export const cartReducer = (
       return {
         ...state,
         receiveName: action.payload,
+      }
+    case CART_SAVE_RECEIVER_INFO:
+      return {
+        ...state,
+        receiverInfo: action.payload,
       }
     case CART_ITEM_RESET:
       return {

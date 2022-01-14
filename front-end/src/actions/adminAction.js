@@ -26,6 +26,8 @@ export const getParams = () => async (dispatch, getState) => {
       type: ADMIN_PARAMS_SUCCESS,
       payload: data,
     })
+
+    localStorage.setItem('params', JSON.stringify(getState().admin.params))
   } catch (error) {
     dispatch({
       type: ADMIN_PARAMS_FAIL,

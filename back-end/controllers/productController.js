@@ -94,6 +94,7 @@ const addProduct = asyncHandler(async (req, res) => {
     brand: 'Sample Brand',
     category: 'none',
     description: 'Sample description',
+    primeImage: '/images/sample.jpg',
   })
   const createdProduct = await product.save()
   res.status(201).json(createdProduct)
@@ -112,6 +113,9 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand = req.body.brand || product.brand
     product.category = req.body.category || product.category
     product.description = req.body.description || product.description
+    product.qtyOptions = req.body.qtyOptions || product.qtyOptions
+    product.colorOptions = req.body.colorOptions || product.colorOptions
+    product.primeImage = req.body.primeImage || product.primeImage
     product.vip = req.body.vip || product.vip
 
     const updatedProduct = await product.save()
@@ -123,7 +127,10 @@ const updateProduct = asyncHandler(async (req, res) => {
       brand: updatedProduct.brand,
       category: updatedProduct.category,
       description: updatedProduct.description,
-      vip: updateProduct.vip,
+      qtyOptions: updatedProduct.qtyOptions,
+      colorOptions: updatedProduct.colorOptions,
+      primeImage: updatedProduct.primeImage,
+      vip: updatedProduct.vip,
     })
   } else {
     res.status(404)

@@ -11,8 +11,14 @@ const orderSchema = mongoose.Schema(
       {
         name: { type: String, required: true },
         qty: { type: Number, required: true },
-        image: { type: String, required: true },
+        image: [{ type: String }],
         price: { type: Number, required: true },
+        color: { type: String },
+        qtyAmount: { type: Number },
+        qtyAmountPrice: { type: Number },
+        primeImage: { type: String },
+        cardMessage: { type: String },
+        specialInstruction: { type: String },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
@@ -20,12 +26,22 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
-    shippingAddress: {
-      address: { type: String, required: true, default: '' },
-      city: { type: String, required: true, default: '' },
-      postalCode: { type: String, required: true, default: '' },
-      // country: { type: String, required: true },
+    // shippingAddress: {
+    //   address: { type: String, required: true, default: '' },
+    //   city: { type: String, required: true, default: '' },
+    //   postalCode: { type: String, required: true, default: '' },
+    //   // country: { type: String, required: true },
+    // },
+    receiverInfo: {
+      name: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      postalCode: { type: String, required: true },
+      receiveDate: { type: Date, required: true },
+      receiveMethod: { type: String, required: true },
     },
+
     paymentMethod: {
       type: String,
       required: true,
@@ -82,6 +98,9 @@ const orderSchema = mongoose.Schema(
     },
     pickupAt: {
       type: Date,
+    },
+    paymentResult: {
+      type: Object,
     },
   },
   {

@@ -24,6 +24,8 @@ import ProductEditScreen from './screens/ProductEditScreen'
 import HomeVipScreen from './screens/HomeVipScreen'
 import EditScreen from './screens/EditScreen'
 import CategoryProductScreen from './screens/CategoryProductScreen'
+import CartItemScreen from './screens/CartItemScreen'
+import CheckOutScreen from './screens/CheckOutScreen'
 
 function App() {
   return (
@@ -55,10 +57,11 @@ function App() {
               exact
             />
             <Route path='/product/:id' element={<ProductScreen />} />
-            <Route path='/cart'>
-              <Route path='' element={<CartScreen />} />
-              <Route path=':id' element={<CartScreen />} />
-            </Route>
+            <Route path='/cart' element={<CartScreen />} />
+
+            <Route path='/cart/cartItem/:id' element={<CartItemScreen />} />
+            <Route path='/checkout' element={<CheckOutScreen />} />
+
             <Route path='/login' element={<LogInScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
             <Route path='/profile' element={<ProfileScreen />} exact />

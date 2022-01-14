@@ -104,6 +104,16 @@ const receiveNameFromStorage = localStorage.getItem('receiveName')
 const productCategoryFromStorage = localStorage.getItem('productCategory')
   ? JSON.parse(localStorage.getItem('productCategory'))
   : {}
+
+//get params from local storage
+const paramsFromStorage = localStorage.getItem('params')
+  ? JSON.parse(localStorage.getItem('params'))
+  : {}
+
+//get receiver info from local storage
+const receiverInfoFromStorage = localStorage.getItem('receiverInfo')
+  ? JSON.parse(localStorage.getItem('receiverInfo'))
+  : {}
 const initialState = {
   cart: {
     cartItems: cartItemsFromStorage,
@@ -113,11 +123,13 @@ const initialState = {
     receiveTime: receiveTimeFromStorage,
     receivePhoneNumber: receivePhoneNumberFromStorage,
     receiveName: receiveNameFromStorage,
+    receiverInfo: receiverInfoFromStorage,
   },
   productListCategory: {
     productCategory: productCategoryFromStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },
+  admin: { params: paramsFromStorage },
 }
 
 const middleware = [thunk]
