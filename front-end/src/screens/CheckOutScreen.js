@@ -9,7 +9,7 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import axios from 'axios'
 import { createOrder, payOrder } from '../actions/orderActions'
 import emailjs from 'emailjs-com'
-
+import { getParams } from '../actions/adminAction'
 const CheckOutScreen = () => {
   const navigate = useNavigate()
   const [receiveMethod, setReceiveMethod] = useState('')
@@ -21,7 +21,8 @@ const CheckOutScreen = () => {
   const [receiverCity, setReceiverCity] = useState('')
   const [sdkReady, setSdkReady] = useState(false)
   const [showInfo, setShowInfo] = useState(true)
-  const [showPaymentInfo, setShowPaymentInfo] = useState(true)
+  const [showPaymentInfo, setShowPaymentInfo] = useState(false)
+  const [showPayment, setShowPayment] = useState(false)
 
   const now = new Date()
   const tomorrow = new Date(
@@ -44,6 +45,14 @@ const CheckOutScreen = () => {
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
 
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const admin = useSelector((state) => state.admin)
+  const { params } = admin
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal')
@@ -82,14 +91,6 @@ const CheckOutScreen = () => {
       sendEmail()
     }
   }, [dispatch, success, navigate])
-  const cart = useSelector((state) => state.cart)
-  const { cartItems } = cart
-
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
-
-  const admin = useSelector((state) => state.admin)
-  const { params } = admin
 
   cart.itemPrice = cartItems
     .reduce((acc, item) => acc + item.price, 0)
@@ -118,6 +119,7 @@ const CheckOutScreen = () => {
     )
     setShowInfo(false)
     setShowPaymentInfo(true)
+    setShowPayment(true)
   }
   const successPaidHandler = (paymentResult) => {
     dispatch(
@@ -262,15 +264,26 @@ const CheckOutScreen = () => {
               <Button type='submit'>Continue</Button>
             </Form>
           </ListGroup.Item>
-          <ListGroup.Item style={{ borderLeft: 'none', borderRight: 'none' }}>
+          <ListGroup.Item
+            style={{
+              borderLeft: 'none',
+              borderRight: 'none',
+              display: showPayment ? '' : 'none',
+            }}
+          >
             <div className='form-inline'>
               <h3>Payment</h3>
-              <i className='fas fa-minus ml-auto' />
+              <i
+                className='fas fa-minus ml-auto'
+                onClick={(e) => setShowPaymentInfo(!showPaymentInfo)}
+              />
             </div>
-            <PayPalButton
-              amount={cart.totalPrice}
-              onSuccess={successPaidHandler}
-            />
+            <div style={{ display: showPaymentInfo ? '' : 'none' }}>
+              <PayPalButton
+                amount={cart.totalPrice}
+                onSuccess={successPaidHandler}
+              />
+            </div>
           </ListGroup.Item>
         </Col>
         <Col lg={5} md={12}>

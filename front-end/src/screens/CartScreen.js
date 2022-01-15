@@ -14,13 +14,6 @@ import Meta from '../components/Meta'
 
 const CartScreen = () => {
   const navigate = useNavigate()
-  const [receiveMethod, setReceiveMethod] = useState('')
-  const [selectMethod, setSelectMethod] = useState(false)
-  const [receiverName, setReceiverName] = useState('')
-  const [receiverPhoneNumber, setReceiverPhoneNumber] = useState('')
-  const [receiverAddress, setReceiverAddress] = useState('')
-  const [receiverPostalCode, setReceiverPostalCode] = useState('')
-  const [receiverCity, setReceiverCity] = useState('')
 
   const now = new Date()
   const tomorrow = new Date(
@@ -51,7 +44,6 @@ const CartScreen = () => {
   }
 
   const checkOutHandler = () => {
-    dispatch(saveReceiveMethod(receiveMethod))
     if (userInfo) {
       // if (receiveMethod === 'Delivery') {
       //   navigate('/shipping')
