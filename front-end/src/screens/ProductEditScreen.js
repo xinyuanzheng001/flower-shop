@@ -278,7 +278,7 @@ const ProductEditScreen = () => {
               <Form.Control
                 as='select'
                 value={showColor}
-                onChange={(e) => setColorOptions(e.target.value)}
+                onChange={(e) => setShowColor(e.target.value)}
                 style={{ width: '50%' }}
               >
                 {colorOptions.map((color, index) => (

@@ -9,7 +9,6 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import axios from 'axios'
 import { createOrder, payOrder } from '../actions/orderActions'
 import emailjs from 'emailjs-com'
-import { getParams } from '../actions/adminAction'
 const CheckOutScreen = () => {
   const navigate = useNavigate()
   const [receiveMethod, setReceiveMethod] = useState('')
@@ -97,7 +96,7 @@ const CheckOutScreen = () => {
     .toFixed(2)
   cart.taxPrice = Number((cart.itemPrice * params.taxRate) / 100).toFixed(2)
   cart.shippingPrice =
-    cart.receiveMethod === 'Delivery' ? params.deliveryCharge.toFixed(2) : 0
+    receiveMethod === 'Delivery' ? params.deliveryCharge.toFixed(2) : 0
   cart.totalPrice = (
     Number(cart.itemPrice) +
     Number(cart.taxPrice) +
@@ -176,13 +175,17 @@ const CheckOutScreen = () => {
           </ListGroup.Item>
           <ListGroup.Item
             style={{
-              display: receiveMethod === 'Delivery' ? 'block' : 'none',
+              display: receiveMethod ? 'block' : 'none',
               borderLeft: 'none',
               borderRight: 'none',
             }}
           >
             <div className='form-inline'>
-              <h3>Delivery Info</h3>
+              <h3>
+                {receiveMethod === 'Delivery'
+                  ? 'Delivery Info'
+                  : 'Pick Up Info'}
+              </h3>
               <i
                 className='fas fa-minus ml-auto'
                 onClick={(e) => setShowInfo(!showInfo)}
@@ -194,26 +197,35 @@ const CheckOutScreen = () => {
               //   style={{ display: 'none' }}
             >
               <Form.Group controlId='receiverName'>
-                <Form.Label>Receiver's Name:</Form.Label>
+                <Form.Label>
+                  {receiveMethod === 'Delivery' ? "Receiver's" : 'Pick Up'}{' '}
+                  Name:
+                </Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder="Enter Receiver's Name"
+                  placeholder=''
                   value={receiverName}
                   onChange={(e) => setReceiverName(e.target.value)}
                   required
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId='receiverName'>
-                <Form.Label>Receiver's Phone Number:</Form.Label>
+                <Form.Label>
+                  {receiveMethod === 'Delivery' ? "Receiver's" : 'Pick Up'}{' '}
+                  Phone Number:
+                </Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder="Enter Receiver's Phone Number"
+                  placeholder=''
                   value={receiverPhoneNumber}
                   onChange={(e) => setReceiverPhoneNumber(e.target.value)}
                   required
                 ></Form.Control>
               </Form.Group>
-              <Form.Group controlId='address'>
+              <Form.Group
+                controlId='address'
+                style={{ display: receiveMethod === 'Delivery' ? '' : 'none' }}
+              >
                 <Form.Label>Receiver's Address:</Form.Label>
                 <Form.Control
                   type='text'
@@ -223,7 +235,10 @@ const CheckOutScreen = () => {
                   required
                 ></Form.Control>
               </Form.Group>
-              <Form.Group controlId='postalcode'>
+              <Form.Group
+                controlId='postalcode'
+                style={{ display: receiveMethod === 'Delivery' ? '' : 'none' }}
+              >
                 <Form.Label>Receiver's Zip Code:</Form.Label>
                 <Form.Control
                   type='text'
@@ -233,7 +248,10 @@ const CheckOutScreen = () => {
                   required
                 ></Form.Control>
               </Form.Group>
-              <Form.Group controlId='city'>
+              <Form.Group
+                controlId='city'
+                style={{ display: receiveMethod === 'Delivery' ? '' : 'none' }}
+              >
                 <Form.Label>Receiver's City:</Form.Label>
                 <Form.Control
                   type='text'
@@ -244,7 +262,9 @@ const CheckOutScreen = () => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId='deliveryDate'>
-                <Form.Label>Delivery Date:</Form.Label>
+                <Form.Label>
+                  {receiveMethod === 'Delivery' ? 'Delivery' : 'Pick Up'} Date:
+                </Form.Label>
                 <Form.Control
                   as={DatePicker}
                   minDate={tomorrow}

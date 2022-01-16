@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 
+const categoryListSchema = mongoose.Schema({
+  category: { type: String },
+})
 const paramsSchema = mongoose.Schema({
   taxRate: {
     type: Number,
@@ -16,6 +19,11 @@ const paramsSchema = mongoose.Schema({
     required: true,
     default: 0,
   },
+  pickUpAddress: {
+    type: String,
+    required: true,
+  },
+  categoryList: [categoryListSchema],
 })
 
 const Params = mongoose.model('Params', paramsSchema)

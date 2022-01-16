@@ -13,6 +13,9 @@ const EditScreen = () => {
   const [deliveryCharge, setDeliveryCharge] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [pickUpAddress, setPickUpAddress] = useState('')
+  const [category, setCategory] = useState('')
+  const [showCategory, setShowCategory] = useState('')
+  const [categoryList, setCategoryList] = useState([])
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const admin = useSelector((state) => state.admin)
@@ -27,12 +30,35 @@ const EditScreen = () => {
       setTaxRate(params.taxRate)
       setDeliveryCharge(params.deliveryCharge)
       setDiscount(params.discount)
+      setPickUpAddress(params.pickUpAddress)
+      setCategoryList(params.categoryList)
     }
   }, [dispatch, params, success])
 
-  const submitHandler = () => {
-    dispatch(updateParams({ taxRate, deliveryCharge, discount }))
+  const deleteCategoryHandler = () => {
+    setCategoryList(categoryList.filter((c) => c !== showCategory))
+    if (categoryList.length >= 1) {
+      setShowCategory(categoryList[0])
+    }
   }
+  const addCategoryHandler = () => {
+    setCategoryList((categoryList) => [...categoryList, { category }])
+    setCategory('')
+  }
+
+  const submitHandler = () => {
+    dispatch(
+      updateParams({
+        taxRate,
+        deliveryCharge,
+        discount,
+        pickUpAddress,
+        categoryList,
+      })
+    )
+    navigate('/')
+  }
+
   return (
     <>
       <Link
@@ -88,6 +114,42 @@ const EditScreen = () => {
               onChange={(e) => setPickUpAddress(e.target.value)}
             ></Form.Control>
           </Form.Group>
+          <Form.Group controlId='category' className='form-inline mb-3'>
+            <Form.Label>Category:</Form.Label>
+            <Form.Control
+              as='select'
+              style={{ marginLeft: 'auto' }}
+              value={showCategory}
+              onChange={(e) => setShowCategory(e.target.value)}
+            >
+              {categoryList.map((c, index) => (
+                <option key={index} value={c.category}>
+                  {c.category}
+                </option>
+              ))}
+            </Form.Control>
+            <i
+              className='fas fa-times ml-3'
+              style={{ color: 'red' }}
+              onClick={deleteCategoryHandler}
+            ></i>
+          </Form.Group>
+          <Form.Group controlId='addCategory' className='form-inline mb-3'>
+            <Form.Label>Add Category:</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter New Category'
+              style={{ marginLeft: 'auto' }}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            ></Form.Control>
+            <i
+              className='fas fa-plus ml-3'
+              style={{ color: 'green' }}
+              onClick={addCategoryHandler}
+            ></i>
+          </Form.Group>
+
           <Form.Group controlId='deliverArea' className='form-inline mb-3'>
             <Form.Label>Delivery Area:</Form.Label>
             <p style={{ marginLeft: 'auto', maxWidth: '218 px' }}>

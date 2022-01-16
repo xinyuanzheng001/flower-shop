@@ -17,6 +17,8 @@ const addParams = asyncHandler(async (req, res) => {
     taxRate: req.body.taxRate,
     deliveryCharge: req.body.deliveryCharge,
     discount: req.body.discount,
+    pickUpAddress: '',
+    categoryList: [],
   })
   const newParams = await params.save()
   res.status(201).json(newParams)
@@ -30,6 +32,9 @@ const updateParams = asyncHandler(async (req, res) => {
   params.taxRate = req.body.taxRate || params.taxRate
   params.deliveryCharge = req.body.deliveryCharge || params.deliveryCharge
   params.discount = req.body.discount || params.discount
+  params.pickUpAddress = req.body.pickUpAddress || params.pickUpAddress
+  params.categoryList = req.body.categoryList || params.categoryList
+
   const updatedParams = await params.save()
   res.json(updatedParams)
 })

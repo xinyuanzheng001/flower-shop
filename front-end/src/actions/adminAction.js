@@ -58,6 +58,10 @@ export const updateParams = (params) => async (dispatch, getState) => {
       type: ADMIN_PARAMS_UPDATE_SUCCESS,
       payload: data,
     })
+    localStorage.setItem(
+      'params',
+      JSON.stringify(getState().adminUpdateParams.params)
+    )
   } catch (error) {
     dispatch({
       type: ADMIN_PARAMS_UPDATE_FAIL,
