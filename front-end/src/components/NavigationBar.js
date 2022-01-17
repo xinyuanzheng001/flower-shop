@@ -20,6 +20,8 @@ const NavigationBar = () => {
   const { productCategory } = productListCategory
   const { categories } = productCategory
   const [isOpenCategory, setIsOpenCategory] = useState(false)
+  const [bgColor, setBgColor] = useState('rgb(220,220,220)')
+  const [contentColor, setContentColor] = useState('black')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,8 +30,8 @@ const NavigationBar = () => {
   return (
     <>
       <Navbar
-        variant='dark'
-        style={{ backgroundColor: 'rgb(220,220,220)', height: '20px' }}
+        // variant='dark'
+        style={{ backgroundColor: bgColor, height: '20px' }}
         className='my-3'
         id='navbar-control'
         // bg='dark'
@@ -66,17 +68,36 @@ const NavigationBar = () => {
               <Button
                 as={Link}
                 to='/vip'
-                style={{ background: 'none', fontSize: 'large' }}
+                style={{
+                  background: 'none',
+                  fontSize: 'large',
+                  color: contentColor,
+                }}
               >
                 VIP
               </Button>
               <Button
                 as={Link}
                 to='/about'
-                style={{ background: 'none', fontSize: 'large' }}
+                style={{
+                  background: 'none',
+                  fontSize: 'large',
+                  color: contentColor,
+                }}
               >
                 About Us
               </Button>
+              <input
+                value={bgColor}
+                placeholder='Enter Background Color'
+                onChange={(e) => setBgColor(e.target.value)}
+                className='ml-3 mr-3'
+              ></input>
+              <input
+                value={contentColor}
+                placeholder='Enter content color'
+                onChange={(e) => setContentColor(e.target.value)}
+              ></input>
             </Nav>
           </Navbar.Collapse>
         </Container>
