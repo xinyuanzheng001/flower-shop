@@ -10,6 +10,8 @@ const Header = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const [bgColor, setBgColor] = useState('lightblue')
+  const [contentColor, setContentColor] = useState('black')
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const productListCategory = useSelector((state) => state.productListCategory)
@@ -37,9 +39,15 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar
+        // bg='dark'
+        variant='dark'
+        expand='lg'
+        collapseOnSelect
+        style={{ backgroundColor: bgColor }}
+      >
         <Container>
-          <Navbar.Brand as={Link} to='/'>
+          <Navbar.Brand as={Link} to='/' style={{ color: contentColor }}>
             Flower Shop
           </Navbar.Brand>
           <Navbar.Toggle
@@ -48,8 +56,17 @@ const Header = () => {
           />
           <Navbar.Collapse id='basic-navbar-nav'>
             <SearchBox />
+            <input
+              value={bgColor}
+              onChange={(e) => setBgColor(e.target.value)}
+              className='ml-3 mr-3'
+            ></input>
+            <input
+              value={contentColor}
+              onChange={(e) => setContentColor(e.target.value)}
+            />
             <Nav className='ml-auto'>
-              <Nav.Link as={Link} to='/cart'>
+              <Nav.Link as={Link} to='/cart' style={{ color: contentColor }}>
                 <i className='fas fa-shopping-cart' />
                 Cart
               </Nav.Link>
