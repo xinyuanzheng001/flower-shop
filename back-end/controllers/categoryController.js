@@ -28,4 +28,16 @@ const addCategory = asyncHandler(async (req, res) => {
     throw new Error('Invalid category')
   }
 })
-export { getCategories, addCategory }
+
+//@desc     Update category
+//@route    PUT /api/category
+//@access   Admin only
+const updateCategory = asyncHandler(async (req, res) => {
+  const { categoryList } = req.body
+  const updatedCategoryList = await Category.findOne({})
+  updatedCategoryList.categories =
+    categoryList || updatedCategoryList.categories
+  const category = await updatedCategoryList.save()
+  res.json(category)
+})
+export { getCategories, addCategory, updateCategory }

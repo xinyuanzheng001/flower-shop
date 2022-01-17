@@ -7,30 +7,29 @@ import {
   Button,
   NavDropdown,
 } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import { useNavigate } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { listProductCategory } from '../actions/productActions'
+import { getParams } from '../actions/adminAction'
 
 const NavigationBar = () => {
   // const navigate = useNavigate()
   const dispatch = useDispatch()
   const productListCategory = useSelector((state) => state.productListCategory)
-  // const { productCategory, success } = productListCategory
-  // const { categories } = productCategory
+  const { productCategory } = productListCategory
+  const { categories } = productCategory
   const [isOpenCategory, setIsOpenCategory] = useState(false)
-  const { params } = useSelector((state) => state.admin)
-  // const { categoryList } = params
-  // useEffect(() => {
-  //   if (!success) {
-  //     dispatch(listProductCategory())
-  //   }
-  // }, [dispatch, success])
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(listProductCategory())
+  }, [dispatch])
   return (
     <>
       <Navbar
         variant='dark'
-        style={{ backgroundColor: 'lightgreen', height: '20px' }}
+        style={{ backgroundColor: 'rgb(220,220,220)', height: '20px' }}
         className='my-3'
         id='navbar-control'
         // bg='dark'
@@ -53,8 +52,8 @@ const NavigationBar = () => {
                 onMouseLeave={() => setIsOpenCategory(false)}
                 onClick={() => setIsOpenCategory(!isOpenCategory)}
               >
-                {params &&
-                  params.categoryList.map((category) => (
+                {categories &&
+                  categories.map((category) => (
                     <NavDropdown.Item
                       key={category.id}
                       as={Link}
