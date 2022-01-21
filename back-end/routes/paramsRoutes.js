@@ -10,7 +10,7 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(protect, getParams)
+  .get(getParams)
   .put(protect, admin, updateParams)
   .post(protect, admin, addParams)
 

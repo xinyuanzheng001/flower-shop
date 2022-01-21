@@ -103,7 +103,7 @@ const receiveNameFromStorage = localStorage.getItem('receiveName')
 // get categories from local storage
 const productCategoryFromStorage = localStorage.getItem('productCategory')
   ? JSON.parse(localStorage.getItem('productCategory'))
-  : {}
+  : []
 
 //get params from local storage
 const paramsFromStorage = localStorage.getItem('params')
@@ -126,7 +126,7 @@ const initialState = {
     receiverInfo: receiverInfoFromStorage,
   },
   productListCategory: {
-    productCategory: productCategoryFromStorage,
+    productCategory: [],
   },
   userLogin: { userInfo: userInfoFromStorage },
   admin: { params: paramsFromStorage },

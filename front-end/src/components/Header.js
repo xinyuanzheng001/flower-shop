@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
 import { useNavigate } from 'react-router'
 import SearchBox from './SearchBox'
+import { listProductCategory } from '../actions/productActions'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -16,7 +17,12 @@ const Header = () => {
   const { userInfo } = userLogin
   const productListCategory = useSelector((state) => state.productListCategory)
   const { productCategory } = productListCategory
-  const { categories } = productCategory
+  // const { categories } = productCategory
+  useEffect(() => {
+    if (!productCategory) {
+      dispatch(listProductCategory())
+    }
+  }, [dispatch])
   const logoutHandler = () => {
     dispatch(logout())
     navigate('/')
@@ -110,8 +116,8 @@ const Header = () => {
               )}
               <div className='dropdown-control'>
                 <NavDropdown title='Category' id='category'>
-                  {categories &&
-                    categories.map((category) => (
+                  {productCategory &&
+                    productCategory.map((category) => (
                       <NavDropdown.Item
                         key={category.id}
                         as={Link}

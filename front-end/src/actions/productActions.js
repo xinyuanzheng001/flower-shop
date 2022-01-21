@@ -61,13 +61,14 @@ export const listProductCategory = () => async (dispatch) => {
     dispatch({
       type: PRODUCT_CATEGORY_LIST_REQUEST,
     })
-    const { data } = await axios.get('/api/category')
+    const { data } = await axios.get('/api/params')
     dispatch({
       type: PRODUCT_CATEGORY_LIST_SUCCESS,
       success: true,
-      payload: data,
+      payload: data.categoryList,
     })
-    localStorage.setItem('productCategory', JSON.stringify(data))
+
+    localStorage.setItem('productCategory', JSON.stringify(data.categoryList))
   } catch (error) {
     dispatch({
       type: PRODUCT_CATEGORY_LIST_FAIL,

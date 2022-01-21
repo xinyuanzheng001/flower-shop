@@ -69,8 +69,8 @@ const ProductScreen = () => {
         qty,
         selectColor,
         qtyAmount,
-        qtyAmountPrice,
-        price,
+        qtyAmountPrice === 0 ? product.price : qtyAmountPrice,
+        price === 0 ? product.price : price,
         cardMessage,
         specialInstruction
       )

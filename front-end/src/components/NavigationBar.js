@@ -18,14 +18,17 @@ const NavigationBar = () => {
   const dispatch = useDispatch()
   const productListCategory = useSelector((state) => state.productListCategory)
   const { productCategory } = productListCategory
-  const { categories } = productCategory
+  // const { categories } = productCategory
   const [isOpenCategory, setIsOpenCategory] = useState(false)
   const [bgColor, setBgColor] = useState('rgb(220,220,220)')
   const [contentColor, setContentColor] = useState('black')
+
   const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(listProductCategory())
+    if (!productCategory[0]) {
+      dispatch(listProductCategory())
+    }
   }, [dispatch])
   return (
     <>
@@ -54,10 +57,20 @@ const NavigationBar = () => {
                 onMouseLeave={() => setIsOpenCategory(false)}
                 onClick={() => setIsOpenCategory(!isOpenCategory)}
               >
-                {categories &&
+                {/* {categories &&
                   categories.map((category) => (
                     <NavDropdown.Item
                       key={category.id}
+                      as={Link}
+                      to={`/${category.category}`}
+                    >
+                      {category.category}
+                    </NavDropdown.Item>
+                  ))} */}
+                {productCategory &&
+                  productCategory.map((category) => (
+                    <NavDropdown.Item
+                      key={category._id}
                       as={Link}
                       to={`/${category.category}`}
                     >

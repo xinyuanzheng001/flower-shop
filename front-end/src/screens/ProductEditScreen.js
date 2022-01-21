@@ -43,7 +43,6 @@ const ProductEditScreen = () => {
 
   const productListCategory = useSelector((state) => state.productListCategory)
   const { productCategory } = productListCategory
-  const { categories } = productCategory
 
   useEffect(() => {
     if (success) {
@@ -210,8 +209,8 @@ const ProductEditScreen = () => {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value=''>Choose Category</option>
-              {categories &&
-                categories.map((category) => (
+              {productCategory &&
+                productCategory.map((category) => (
                   <option value={category.category} key={category._id}>
                     {category.category}
                   </option>

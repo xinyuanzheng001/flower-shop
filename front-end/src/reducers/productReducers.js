@@ -2,6 +2,7 @@ import {
   PRODUCT_CATEGORY_LIST_FAIL,
   PRODUCT_CATEGORY_LIST_REQUEST,
   PRODUCT_CATEGORY_LIST_SUCCESS,
+  PRODUCT_CATEGORY_LIST_UPDATE,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_RESET,
@@ -80,8 +81,10 @@ export const productListCategoryReducer = (
 ) => {
   switch (action.type) {
     case PRODUCT_CATEGORY_LIST_REQUEST:
-      return { loading: true, productCategory: [] }
+      return { loading: true }
     case PRODUCT_CATEGORY_LIST_SUCCESS:
+      return { loading: false, productCategory: action.payload }
+    case PRODUCT_CATEGORY_LIST_UPDATE:
       return { loading: false, productCategory: action.payload }
     case PRODUCT_CATEGORY_LIST_FAIL:
       return { loading: false, error: action.payload }

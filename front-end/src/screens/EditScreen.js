@@ -36,9 +36,9 @@ const EditScreen = () => {
   }, [dispatch, params, success])
 
   const deleteCategoryHandler = () => {
-    setCategoryList(categoryList.filter((c) => c !== showCategory))
+    setCategoryList(categoryList.filter((c) => c.category !== showCategory))
     if (categoryList.length >= 1) {
-      setShowCategory(categoryList[0])
+      setShowCategory(categoryList[0].category)
     }
   }
   const addCategoryHandler = () => {

@@ -7,7 +7,10 @@ import {
   ADMIN_PARAMS_UPDATE_SUCCESS,
   ADMIN_PARAMS_UPDATE_FAIL,
 } from '../constants/adminConstants'
-import { PRODUCT_CATEGORY_LIST_SUCCESS } from '../constants/productConstants'
+import {
+  PRODUCT_CATEGORY_LIST_SUCCESS,
+  PRODUCT_CATEGORY_LIST_UPDATE,
+} from '../constants/productConstants'
 
 export const getParams = () => async (dispatch, getState) => {
   try {
@@ -56,10 +59,15 @@ export const updateParams = (params) => async (dispatch, getState) => {
       },
     }
     const { data } = await axios.put('/api/params', params, config)
-
+    await axios.put('/api/category', params.categoryList, config)
     dispatch({
       type: ADMIN_PARAMS_UPDATE_SUCCESS,
       payload: data,
+    })
+
+    dispatch({
+      type: PRODUCT_CATEGORY_LIST_UPDATE,
+      payload: data.categoryList,
     })
 
     localStorage.setItem(
