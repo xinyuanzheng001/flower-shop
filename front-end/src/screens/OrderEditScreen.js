@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,7 @@ const OrderEditScreen = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [showInfo, setShowInfo] = useState({})
   const orderDetail = useSelector((state) => state.orderDetail)
   const { order, loading, error } = orderDetail
 
@@ -26,6 +27,14 @@ const OrderEditScreen = () => {
   const { userInfo } = userLogin
   const successDeliveredHandler = () => {
     dispatch(delieverOrder(order))
+  }
+
+  const showInfoHandler = (index) => {
+    let show = {}
+    order.orderItems.map((item) => (show[item._id] = false))
+    setShowInfo(show)
+    setShowInfo({ ...showInfo, [index]: !showInfo[index] })
+    console.log(showInfo)
   }
 
   useEffect(() => {
@@ -71,8 +80,8 @@ const OrderEditScreen = () => {
               </p>
               <p>
                 <strong>Address:</strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
-                {order.shippingAddress.postalCode}
+                {order.receiverInfo.address}, {order.receiverInfo.city},{' '}
+                {order.receiverInfo.postalCode}
               </p>
               {order.isDelivered ? (
                 <Message variant='success'>
@@ -97,7 +106,7 @@ const OrderEditScreen = () => {
 
             <ListGroup.Item>
               <h2>Order Items</h2>
-              {order.orderItems.length === 0 ? (
+              {/* {order.orderItems.length === 0 ? (
                 <Message>Your order is empty</Message>
               ) : (
                 <ListGroup variant='flush'>
@@ -125,7 +134,51 @@ const OrderEditScreen = () => {
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
-              )}
+              )} */}
+              {order.orderItems.map((item, index) => (
+                <ListGroup.Item
+                  key={index}
+                  className='control'
+                  style={{ border: 'none' }}
+                >
+                  <Row>
+                    <Col md={2} sm={2} xs={2}>
+                      <Image
+                        src={item.primeImage}
+                        alt={item.name}
+                        fluid
+                        rounded
+                      />
+                    </Col>
+                    <Col>
+                      {/* <Link to={`/product/${item.product}`}>{item.name}</Link> */}
+                      {item.name}
+                    </Col>
+                    <Col md={4} sm={4} xs={4}>
+                      {item.qty} x ${item.qtyAmountPrice} = $
+                      {(item.qty * item.qtyAmountPrice).toFixed(2)}
+                    </Col>
+                    <Col md={1} sm={1} xs={1}>
+                      <i
+                        className='fas fa-plus'
+                        onClick={() => showInfoHandler(item._id)}
+                      />
+                    </Col>
+                  </Row>
+                  <div
+                    style={{
+                      display: showInfo[item._id] ? '' : 'none',
+                      // transition: '1s',
+                    }}
+                    className='div-control'
+                  >
+                    <p>Flower Amount: {item.qtyAmount}</p>
+                    <p>Color: {item.color}</p>
+                    <p>Card Message: {item.cardMessage}</p>
+                    <p>Special Instruction: {item.specialInstruction}</p>
+                  </div>
+                </ListGroup.Item>
+              ))}
             </ListGroup.Item>
           </ListGroup>
         </Col>
