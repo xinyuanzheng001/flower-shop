@@ -50,7 +50,7 @@ const Header = () => {
         variant='dark'
         expand='lg'
         collapseOnSelect
-        style={{ backgroundColor: bgColor }}
+        style={{ backgroundColor: 'rgb(192,192,192)' }}
       >
         <Container>
           <Navbar.Brand as={Link} to='/' style={{ color: contentColor }}>

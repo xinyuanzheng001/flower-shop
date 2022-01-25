@@ -125,8 +125,8 @@ const CheckOutScreen = () => {
       createOrder({
         orderItems: cart.cartItems,
         receiverInfo: cart.receiverInfo,
-        paymentMethod: cart.paymentMethod,
-        receiveMethod: cart.receiveMethod,
+        paymentMethod: 'PayPal',
+        receiveMethod: receiveMethod,
         itemPrice: cart.itemPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,

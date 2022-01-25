@@ -34,7 +34,7 @@ const NavigationBar = () => {
     <>
       <Navbar
         // variant='dark'
-        style={{ backgroundColor: bgColor, height: '20px' }}
+        style={{ backgroundColor: 'rgb(192,192,192)', height: '20px' }}
         className='my-3'
         id='navbar-control'
         // bg='dark'
@@ -84,7 +84,7 @@ const NavigationBar = () => {
                 style={{
                   background: 'none',
                   fontSize: 'large',
-                  color: contentColor,
+                  color: 'black',
                 }}
               >
                 VIP
