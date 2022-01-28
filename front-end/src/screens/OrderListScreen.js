@@ -20,6 +20,7 @@ const OrderListScreen = () => {
   const { loading, error, ordersListDetail, pages, page } = orderListAdminAll
 
   useEffect(() => {
+    console.log(Date.now().toString())
     if (!userInfo.isAdmin) {
       navigate('/')
     } else {
@@ -54,7 +55,7 @@ const OrderListScreen = () => {
                 <th>CUSTOMER</th>
                 <th>PRICE</th>
                 <th>ORDER AT</th>
-                <th>PAYMENT METHOD</th>
+                <th>RECEIVE METHOD</th>
                 <th>PAID</th>
                 <th>DELIVERED</th>
               </tr>
@@ -66,7 +67,7 @@ const OrderListScreen = () => {
                   <td>{order.user.name}</td>
                   <td>${order.totalPrice}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.paymentMethod}</td>
+                  <td>{order.receiverInfo.receiveMethod}</td>
                   <td>
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)
