@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -178,6 +178,31 @@ const ProductEditScreen = () => {
               value={image}
               onChange={(e) => setImage(e.target.value)}
             ></Form.Control> */}
+            <div
+              className='my-3'
+              style={{
+                display: 'flex',
+                // justifyContent: 'space-evenly',
+                gap: '10px',
+                flexWrap: 'wrap',
+              }}
+            >
+              {image &&
+                image.map((i, index) => (
+                  <Image
+                    src={i}
+                    key={index}
+                    style={{
+                      width: '15%',
+                      // margin: '10px',
+                      maxHeight: '70px',
+                      // gap: '10px',
+                      cursor: 'pointer',
+                      // justifyContent: 'space-evenly',
+                    }}
+                  ></Image>
+                ))}
+            </div>
             <Form.Control
               // id='image-file'
               // type='file'
