@@ -9,6 +9,7 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import axios from 'axios'
 import { createOrder, payOrder } from '../actions/orderActions'
 import emailjs from 'emailjs-com'
+import { updateProduct } from '../actions/productActions'
 const CheckOutScreen = () => {
   const navigate = useNavigate()
   const [receiveMethod, setReceiveMethod] = useState('')
@@ -138,6 +139,17 @@ const CheckOutScreen = () => {
         specialInstruction: cart.specialInstruction,
       })
     )
+    cart.cartItems.map((item) =>
+      item.addCountInStock === true
+        ? dispatch(
+            updateProduct({
+              id: item.product,
+              countInStock: Number(item.countInStock) - Number(item.qty),
+              addCountInStock: true,
+            })
+          )
+        : ''
+    )
   }
 
   return (
@@ -232,7 +244,7 @@ const CheckOutScreen = () => {
                   placeholder="Enter Receiver's Address"
                   value={receiverAddress}
                   onChange={(e) => setReceiverAddress(e.target.value)}
-                  required
+                  required={receiveMethod === 'Delivery' ? true : false}
                 ></Form.Control>
               </Form.Group>
               <Form.Group
@@ -245,7 +257,7 @@ const CheckOutScreen = () => {
                   placeholder="Enter Receiver's Zip Code"
                   value={receiverPostalCode}
                   onChange={(e) => setReceiverPostalCode(e.target.value)}
-                  required
+                  required={receiveMethod === 'Delivery' ? true : false}
                 ></Form.Control>
               </Form.Group>
               <Form.Group
@@ -258,7 +270,7 @@ const CheckOutScreen = () => {
                   placeholder="Enter Receiver's City"
                   value={receiverCity}
                   onChange={(e) => setReceiverCity(e.target.value)}
-                  required
+                  required={receiveMethod === 'Delivery' ? true : false}
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId='deliveryDate'>

@@ -84,6 +84,7 @@ const UserEditScreen = () => {
                 //   placeholder={user.name}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='email'>
@@ -93,6 +94,7 @@ const UserEditScreen = () => {
                 //   placeholder={user.email}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='isadmin'>

@@ -109,7 +109,7 @@ const Header = () => {
                   </NavDropdown>
                 )
               ) : (
-                <Nav.Link as={Link} to='/login'>
+                <Nav.Link as={Link} to='/login' style={{ color: 'black' }}>
                   <i className='fas fa-user' />
                   Sign In
                 </Nav.Link>

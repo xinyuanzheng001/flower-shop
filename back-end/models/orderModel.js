@@ -35,9 +35,9 @@ const orderSchema = mongoose.Schema(
     receiverInfo: {
       name: { type: String, required: true },
       phoneNumber: { type: String, required: true },
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
+      address: { type: String },
+      city: { type: String },
+      postalCode: { type: String },
       receiveDate: { type: Date, required: true },
       receiveMethod: { type: String, required: true },
     },

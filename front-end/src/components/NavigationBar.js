@@ -95,7 +95,7 @@ const NavigationBar = () => {
                 style={{
                   background: 'none',
                   fontSize: 'large',
-                  color: contentColor,
+                  color: 'black',
                 }}
               >
                 About Us

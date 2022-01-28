@@ -27,6 +27,8 @@ const ProductEditScreen = () => {
   const [color, setColor] = useState('')
   const [showColor, setShowColor] = useState('')
   const [colorOptions, setColorOptions] = useState([])
+  const [addCountInStock, setAddCountInStock] = useState(false)
+  const [countInStock, setCountInStock] = useState(0)
   const navigate = useNavigate()
   const { id } = useParams()
 
@@ -47,6 +49,7 @@ const ProductEditScreen = () => {
   useEffect(() => {
     if (success) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
+      dispatch(listProductDetails(id))
       navigate('/admin/products')
     } else {
       if (!product.name || product._id !== id) {
@@ -61,6 +64,8 @@ const ProductEditScreen = () => {
         setColorOptions(product.colorOptions)
         setPrimeImage(product.primeImage)
         setVip(product.vip)
+        setAddCountInStock(product.addCountInStock)
+        setCountInStock(product.countInStock)
       }
     }
   }, [dispatch, navigate, id, product, success])
@@ -80,6 +85,8 @@ const ProductEditScreen = () => {
         colorOptions,
         primeImage,
         vip,
+        addCountInStock,
+        countInStock,
       })
     )
   }
@@ -309,14 +316,32 @@ const ProductEditScreen = () => {
               ></i>
             </div>
           </Form.Group>
-          <Form.Group controlId='vip'>
+
+          <Form.Group controlId='count'>
+            <Form.Check
+              type='checkbox'
+              label='Add Count In Stock'
+              className='my-3'
+              checked={addCountInStock}
+              onChange={(e) => setAddCountInStock(e.target.checked)}
+            ></Form.Check>
+            <div style={{ display: addCountInStock ? '' : 'none' }}>
+              <Form.Label>Count In Stock</Form.Label>
+              <Form.Control
+                type='number'
+                value={countInStock}
+                onChange={(e) => setCountInStock(e.target.value)}
+              ></Form.Control>
+            </div>
+          </Form.Group>
+          {/* <Form.Group controlId='vip'>
             <Form.Check
               type='checkbox'
               label='For VIP?'
               checked={vip}
               onChange={(e) => setVip(e.target.checked)}
             ></Form.Check>
-          </Form.Group>
+          </Form.Group> */}
 
           <Button type='submit' variant='primary' className='my-3'>
             Edit

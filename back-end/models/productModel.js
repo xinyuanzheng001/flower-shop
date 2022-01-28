@@ -69,6 +69,14 @@ const productSchema = mongoose.Schema(
     },
     colorOptions: [colorOptionSchema],
     qtyOptions: [qtyOptionSchema],
+    addCountInStock: {
+      type: Boolean,
+      default: false,
+    },
+    countInStock: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

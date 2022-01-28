@@ -117,6 +117,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.colorOptions = req.body.colorOptions || product.colorOptions
     product.primeImage = req.body.primeImage || product.primeImage
     product.vip = req.body.vip || product.vip
+    product.addCountInStock = req.body.addCountInStock
+    product.countInStock = req.body.countInStock || product.countInStock
 
     const updatedProduct = await product.save()
     res.json({
@@ -131,6 +133,8 @@ const updateProduct = asyncHandler(async (req, res) => {
       colorOptions: updatedProduct.colorOptions,
       primeImage: updatedProduct.primeImage,
       vip: updatedProduct.vip,
+      addCountInStock: updatedProduct.addCountInStock,
+      countInStock: updatedProduct.countInStock,
     })
   } else {
     res.status(404)

@@ -21,7 +21,9 @@ export const addToCart =
     qtyAmountPrice,
     price,
     cardMessage,
-    specialInstruction
+    specialInstruction,
+    addCountInStock,
+    countInStock
   ) =>
   async (dispatch, getState) => {
     const { data } = await axios.get(`/api/products/${id}`)
@@ -40,6 +42,8 @@ export const addToCart =
         cardMessage,
         specialInstruction,
         qtyAmountPrice,
+        addCountInStock,
+        countInStock,
       },
     })
 

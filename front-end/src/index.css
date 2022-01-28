@@ -3,6 +3,10 @@ main {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#admin {
+  color: black;
+}
+
 Table {
   overflow: hidden;
 }
@@ -81,6 +85,7 @@ h2 {
 #dropdown-item-button {
   background: none;
   font-size: large;
+  color: black;
 }
 @media (min-width: 990px) {
   .dropdown-control {
@@ -95,6 +100,10 @@ h2 {
 
 i:hover {
   cursor: pointer;
+}
+
+#username {
+  color: black;
 }
 
 /* .control:hover .div-control {

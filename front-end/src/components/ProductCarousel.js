@@ -39,7 +39,7 @@ const ProductCarousel = () => {
         indicators={false}
         prevLabel=''
         nextLabel=''
-        style={{ backgroundColor: bgColor }}
+        style={{ backgroundColor: 'white' }}
       >
         {products.map((product) => (
           <Carousel.Item key={product._id}>

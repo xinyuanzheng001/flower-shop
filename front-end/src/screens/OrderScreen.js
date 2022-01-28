@@ -21,6 +21,8 @@ const OrderScreen = () => {
   const orderPay = useSelector((state) => state.orderPay)
   const { success: successPay } = orderPay
 
+  const admin = useSelector((state) => state.admin)
+
   const showInfoHandler = (index) => {
     let show = {}
     order.orderItems.map((item) => (show[item._id] = false))
@@ -88,16 +90,32 @@ const OrderScreen = () => {
               <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
             </p>
             <p>
-              <strong>Address:</strong>
-              {order.receiverInfo.address}, {order.receiverInfo.city},{' '}
-              {order.receiverInfo.postalCode}
+              <strong>
+                {order.receiverInfo.receiveMethod === 'Delivery'
+                  ? ''
+                  : 'Pick Up '}
+                Address:
+              </strong>
+              {order.receiverInfo.receiveMethod === 'Delivery'
+                ? (order.receiverInfo.address,
+                  order.receiverInfo.city,
+                  order.receiverInfo.postalCode)
+                : admin.params.pickUpAddress}
             </p>
             {order.isDelivered ? (
               <Message variant='success'>
-                Delivered on {order.deliveredAt}
+                {order.receiverInfo.receiveMethod === 'Delivery'
+                  ? 'Delivered'
+                  : 'Pick Up'}{' '}
+                on {order.deliveredAt}
               </Message>
             ) : (
-              <Message variant='danger'>Not Delivered</Message>
+              <Message variant='danger'>
+                Not{' '}
+                {order.receiverInfo.receiveMethod === 'Delivery'
+                  ? 'Delivered'
+                  : 'Pick Up'}
+              </Message>
             )}
           </ListGroup.Item>
           <ListGroup.Item>

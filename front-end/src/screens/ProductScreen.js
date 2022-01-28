@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-  Form,
-  FormGroup,
-} from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails, reviewProduct } from '../actions/productActions'
@@ -72,7 +63,9 @@ const ProductScreen = () => {
         qtyAmountPrice === 0 ? product.price : qtyAmountPrice,
         price === 0 ? product.price : price,
         cardMessage,
-        specialInstruction
+        specialInstruction,
+        product.addCountInStock,
+        product.countInStock
       )
     )
     // navigate(`/cart/${id}?qty=${qty}`)
@@ -160,6 +153,11 @@ const ProductScreen = () => {
                       text={`${product.numReviews} reviews`}
                     />
                   </ListGroup.Item>
+                  {product.addCountInStock && (
+                    <ListGroup.Item className='font-weight-bold'>
+                      Count In Stock: {product.countInStock}
+                    </ListGroup.Item>
+                  )}
                   <ListGroup.Item className='font-weight-bold'>
                     Price: ${price ? price : product.price}
                   </ListGroup.Item>
@@ -241,11 +239,17 @@ const ProductScreen = () => {
                         className='ml-auto'
                         required
                       >
-                        {[...Array(10).keys()].map((x) => (
-                          <option value={x + 1} key={x + 1}>
-                            {x + 1}
-                          </option>
-                        ))}
+                        {product.addCountInStock && product.countInStock >= 10
+                          ? [...Array(10).keys()].map((x) => (
+                              <option value={x + 1} key={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))
+                          : [...Array(product.countInStock).keys()].map((x) => (
+                              <option value={x + 1} key={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
                       </Form.Control>
                     </Form.Group>
                   </ListGroup.Item>
@@ -254,6 +258,9 @@ const ProductScreen = () => {
                       className='btn-block'
                       type='submit'
                       // onClick={addToCartHandler}
+                      disabled={
+                        product.addCountInStock && product.countInStock <= 0
+                      }
                     >
                       Add To Cart
                     </Button>

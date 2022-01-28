@@ -87,6 +87,7 @@ const ProductListScreen = () => {
                 <th>PRICE</th>
                 <th>CATEGORY</th>
                 <th>RATING</th>
+                <th>COUNT</th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +98,9 @@ const ProductListScreen = () => {
                   <td>{product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.rating}</td>
+                  <td>
+                    {product.addCountInStock ? product.countInStock : 'None'}
+                  </td>
                   <td>
                     <Button
                       as={Link}
