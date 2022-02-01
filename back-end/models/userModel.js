@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema(
     },
     phoneNumber: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
