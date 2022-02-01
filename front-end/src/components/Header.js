@@ -62,7 +62,7 @@ const Header = () => {
           />
           <Navbar.Collapse id='basic-navbar-nav'>
             <SearchBox />
-            <input
+            {/* <input
               value={bgColor}
               onChange={(e) => setBgColor(e.target.value)}
               className='ml-3 mr-3'
@@ -70,7 +70,7 @@ const Header = () => {
             <input
               value={contentColor}
               onChange={(e) => setContentColor(e.target.value)}
-            />
+            /> */}
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/cart' style={{ color: contentColor }}>
                 <i className='fas fa-shopping-cart' />

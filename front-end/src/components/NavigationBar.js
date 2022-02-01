@@ -100,7 +100,7 @@ const NavigationBar = () => {
               >
                 About Us
               </Button>
-              <input
+              {/* <input
                 value={bgColor}
                 placeholder='Enter Background Color'
                 onChange={(e) => setBgColor(e.target.value)}
@@ -110,7 +110,7 @@ const NavigationBar = () => {
                 value={contentColor}
                 placeholder='Enter content color'
                 onChange={(e) => setContentColor(e.target.value)}
-              ></input>
+              ></input> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

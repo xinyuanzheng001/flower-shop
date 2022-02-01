@@ -24,7 +24,7 @@ const ProductCarousel = () => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <input
+      {/* <input
         value={bgColor}
         onChange={(e) => setBgColor(e.target.value)}
         className='my-3 mr-3'
@@ -32,7 +32,7 @@ const ProductCarousel = () => {
       <input
         value={contentColor}
         onChange={(e) => setContentColor(e.target.value)}
-      ></input>
+      ></input> */}
       <Carousel
         pause='hover'
         // className='bg-dark'
